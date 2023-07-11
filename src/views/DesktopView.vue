@@ -1,24 +1,33 @@
 <template>
   <DesktopLayout>
     <div
-      class="d-flex justify-center align-center"
+      class="d-flex justify-center align-center flex-column"
     >
-      <pre style="position: fixed; left: 0; top: 25px;">{{ uiStore.activeWindows }}</pre>
-
-      <FolderLink
-        v-for="item in uiStore.windows"
-        :id="item.id"
-        :key="item.id"
-        :window="item"
-        :title="item.title"
-        class="ma-2"
-      />
+      <v-navigation-drawer
+        v-model="drawer"
+        floating
+        temporary
+        disable-route-watcher
+        elevation="0"
+        :scrim="false"
+      >
+        <FolderLink
+          v-for="item in uiStore.windows"
+          :id="item.id"
+          :key="item.id"
+          :window="item"
+          :title="item.title"
+          class="ma-2"
+        />
+      </v-navigation-drawer>
 
       <FileWindow
-        v-for="window in uiStore.activeWindows"
+        v-for="(window, index) in uiStore.activeWindows"
         :id="window.id"
         :key="window.id"
         :window="window"
+        :initial-x="index * 50"
+        :initial-y="index * 50"
       >
         <template #default>
           <div class="d-flex justify-center align-center">
@@ -43,7 +52,8 @@ export default {
   components: { FolderLink, FileWindow, DesktopLayout },
   data() {
     return {
-      setItems: null
+      setItems: null,
+      drawer: true,
     };
   },
   computed: {

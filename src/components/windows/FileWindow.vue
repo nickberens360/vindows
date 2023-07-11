@@ -13,6 +13,11 @@
       >
         <template #append>
           <v-icon
+            icon="fal fa-minus-square"
+            color="white"
+            @click="handleMinimize"
+          />
+          <v-icon
             icon="far fa-times"
             color="white"
             @click="handleClose"
@@ -70,6 +75,9 @@ export default {
       }
       this.$router.go(-1);
     },
+    handleMinimize() {
+      console.log('minimize');
+    },
   },
 };
 </script>
@@ -79,8 +87,8 @@ export default {
   :deep(.drag-box) {
     border: 1px solid #000;
     background-color: #fff;
-    height: 200px;
-    width: 200px;
+    height: 400px;
+    width: 500px;
     resize: both;
     overflow: auto;
   }

@@ -32,6 +32,16 @@ export default {
       type: String,
       required: true,
     },
+    initialX: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
+    initialY: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
   },
   emits: ['drag-box-clicked', 'drag-box-mousedown', 'drag-box-mouseup'],
   data() {
@@ -52,6 +62,10 @@ export default {
     setPositionsY() {
       return this.y + 'px';
     },
+  },
+  mounted() {
+    this.x = this.initialX - this.$refs[this.id].offsetWidth / 2;
+    this.y = this.initialY;
   },
   methods: {
     handleClick() {
