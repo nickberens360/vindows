@@ -10,6 +10,7 @@
         disable-route-watcher
         elevation="0"
         :scrim="false"
+        style="z-index: 10;"
       >
         <FolderLink
           v-for="item in uiStore.windows"

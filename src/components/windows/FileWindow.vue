@@ -76,7 +76,8 @@ export default {
       this.$router.go(-1);
     },
     handleMinimize() {
-      console.log('minimize');
+      this.uiStore.minimizeWindow(this.window);
+      this.handleClose();
     },
   },
 };
@@ -85,6 +86,7 @@ export default {
 <style scoped lang="scss">
 .file-window {
   :deep(.drag-box) {
+    z-index: 100;
     border: 1px solid #000;
     background-color: #fff;
     height: 400px;

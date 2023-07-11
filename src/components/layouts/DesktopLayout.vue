@@ -1,12 +1,12 @@
 <template>
   <div>
     <slot name="app-top-bar">
-      <AppSystemBar class="d-none" />
+      <AppSystemBar />
     </slot>
     <slot name="app-footer-bar">
       <AppFooterBar />
     </slot>
-    <v-main>
+    <v-main class="pt-15">
       <slot name="default" />
     </v-main>
   </div>

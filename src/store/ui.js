@@ -19,6 +19,7 @@ export const useUiStore = defineStore('ui', {
       ],
       activeWindow: {},
       activeWindows: [],
+      minimizedWindows: [],
     };
   },
   actions: {
@@ -36,6 +37,10 @@ export const useUiStore = defineStore('ui', {
     removeActiveWindow(window) {
       let index = this.activeWindows.indexOf(window);
       this.activeWindows.splice(index, 1);
+    },
+    minimizeWindow(window) {
+      if (this.minimizedWindows.includes(window)) return;
+      this.minimizedWindows.push(window);
     }
   }
 });
