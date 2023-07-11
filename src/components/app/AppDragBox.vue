@@ -1,25 +1,22 @@
 <template>
   <div
-    class="position-relative d-inline-block"
+    class="position-relative"
   >
     <div
       :id="id"
       :ref="id"
       class="drag-box"
       @click="handleClick()"
-      v-on="{ mousedown: !useHandle ? handleMouseDown : null }"
     >
       <div
         :id="`handle-${id}`"
         :ref="`handle-${id}`"
         class="drag-box__handle"
-        v-on="{ mousedown: useHandle ? handleMouseDown : null }"
+        v-on="{ mousedown: handleMouseDown }"
       >
-        <slot name="handle" />
+        <slot name="drag-area" />
       </div>
       <slot name="default" />
-
-
       <slot name="footer" />
     </div>
   </div>
@@ -34,11 +31,6 @@ export default {
     id: {
       type: String,
       required: true,
-    },
-    useHandle: {
-      type: Boolean,
-      required: false,
-      default: false,
     },
   },
   emits: ['drag-box-clicked', 'drag-box-mousedown', 'drag-box-mouseup'],
@@ -101,18 +93,5 @@ export default {
   z-index: v-bind(setZIndex);
   top: v-bind(setPositionsY);
   left: v-bind(setPositionsX);
-  border: 1px solid #000;
-  cursor: move;
-  background-color: #fff;
-  height: 200px;
-  width: 200px;
-}
-
-.drag-box__handle {
-  position: sticky;
-  background-color: #000;
-  top: 0;
-  height: 20px;
-  width: 100%;
 }
 </style>

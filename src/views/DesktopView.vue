@@ -51,19 +51,23 @@ export default {
   },
   watch: {
     '$route'(to, from) {
-      const window = this.uiStore.windows.filter(item =>
-        item.id === this.$route.params.id
-      );
-      if (to !== from) {
-        this.uiStore.setActiveWindow(window[0]);
-      }
-      if (!this.uiStore.activeWindows.includes(window[0])) {
-        this.uiStore.addActiveWindow(...window);
+      if (this.$route.name !== 'desktop') {
+        const window = this.uiStore.windows.filter(item =>
+          item.id === this.$route.params.id
+        );
+        if (to !== from) {
+          this.uiStore.setActiveWindow(window[0]);
+        }
+        if (!this.uiStore.activeWindows.includes(window[0])) {
+          this.uiStore.addActiveWindow(...window);
+        }
       }
     }
   },
   mounted() {
-    this.initStoreData();
+    if (this.$route.name !== 'desktop') {
+      this.initStoreData();
+    }
   },
   methods: {
     initStoreData() {
