@@ -1,0 +1,8 @@
+.meru-tabs{
+  &.meru-tabs--selected {
+    background-color: rgb(var(--v-theme-primary)) !important;
+    .v-btn__content {
+      color: white !important;
+    }
+  }
+}
