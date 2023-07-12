@@ -9,13 +9,12 @@
       <div>
         <div class="folder-icon">
           <div class="folder-icon__back" />
-          <div class="folder-icon__front" />
+          <div class="folder-icon__front text-black text-caption font-weight-semibold text-center">
+            {{ title }}
+          </div>
         </div>
-        <slot name="label">
-          <!--          <span class="desktop-item__label d-block bg-blue mt-1 rounded-xl text-white text-center">{{-->
-          <!--            title-->
-          <!--          }}</span>-->
-        </slot>
+        <!--        <slot name="label">-->
+        <!--        </slot>-->
       </div>
     </div>
   </router-link>

@@ -40,7 +40,7 @@ body {
 <style scoped lang="scss">
 :deep(.v-main) {
   background: rgb(219,234,254);
-  background: linear-gradient(-125deg, rgba(219,234,254,1) 0%, rgb(116, 163, 237) 45%);
+  background: linear-gradient(-125deg, rgba(219,234,254,1) 0%, rgb(138, 176, 237) 45%);
 }
 
 .hills:after {

@@ -1,61 +1,42 @@
 <template>
-  <div>
-    <v-footer
-      app
-      class="d-flex align-end justify-center"
-      height="55"
+  <v-footer
+    app
+    class="d-flex align-end justify-space-between"
+    height="55"
+  >
+    <div
+      class="app-footer__container d-flex align-center justify-space-between"
     >
-      <div class="app-footer__item mx-4">
+      <div class="app-footer__item">
         <FolderLink
           :id="uiStore.windows[0].id"
           :window="uiStore.windows[0]"
+          title="Test One"
           class="ma-2"
           style="top: -10px; position: relative;"
         />
       </div>
-      <div class="app-footer__item mx-4">
-        <FolderLink
-          :id="uiStore.windows[0].id"
-          :window="uiStore.windows[0]"
-          class="ma-2"
-          style="top: -10px; position: relative;"
-        />
-      </div>
-      <div class="app-footer__item mx-4">
-        <FolderLink
-          :id="uiStore.windows[0].id"
-          :window="uiStore.windows[0]"
-          class="ma-2"
-          style="top: -10px; position: relative;"
-        />
-      </div>
-      <div class="app-footer__item mx-4">
-        <FolderLink
-          :id="uiStore.windows[0].id"
-          :window="uiStore.windows[0]"
-          class="ma-2"
-          style="top: -10px; position: relative;"
-        />
-      </div>
-
-
-
-      <div class="d-flex">
+    </div>
+    <div class="app-footer__minimized d-flex">
+      <div
+        v-for="window in uiStore.minimizedWindows"
+        :key="window.id"
+        class="app-footer__item"
+        @click="handleMinimizedWindowClick(window)"
+      >
         <FileWindow
-          v-for="window in uiStore.minimizedWindows"
           :id="window.id"
-          :key="window.id"
           :window="window"
         />
       </div>
-      <div class="edge">
+    </div>
+    <div class="edge">
         &nbsp;
-      </div>
-      <div class="app-footer__shadow">
+    </div>
+    <div class="app-footer__shadow">
         &nbsp;
-      </div>
-    </v-footer>
-  </div>
+    </div>
+  </v-footer>
 </template>
 
 <script>
@@ -69,6 +50,11 @@ export default {
   components: { FolderLink, FileWindow },
   computed: {
     ...mapStores(useUiStore),
+  },
+  methods: {
+    handleMinimizedWindowClick(window) {
+      this.uiStore.addActiveWindow(window);
+    },
   },
 };
 </script>
@@ -113,12 +99,21 @@ export default {
   }
 }
 
+//.app-footer__minimized {
+//  .app-footer__item {
+//    &:first-of-type {
+//      border-left: 1px solid red;
+//    }
+//  }
+//}
+
+
 .app-footer__item {
   position: relative;
   top: -38px;
-  width: 100px;
+  width: 150px;
   height: 100px;
-  //background: red;
+  z-index: 1;
   &:after {
     content: "";
     position: absolute;
@@ -149,6 +144,7 @@ export default {
   height: 20px;
   background: #a2a2a2;
 }
+
 .app-footer__shadow {
   position: absolute;
   z-index: -1;
@@ -187,11 +183,12 @@ export default {
   }
 }
 
-
-
 :deep(.file-window) {
   width: 150px !important;
-  height: 85px !important;
+  height: 115px !important;
+  .file-window__sidebar {
+    display: none !important;
+  }
 }
 :deep(.drag-box) {
   position: relative !important;

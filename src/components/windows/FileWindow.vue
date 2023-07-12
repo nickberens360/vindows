@@ -21,7 +21,7 @@
             @click="handleClose"
           />
         </template>
-        <div>
+        <div class="font-weight-semibold">
           {{ window.title }}
         </div>
       </v-toolbar>
@@ -31,11 +31,11 @@
 
     <div class="file-window__layout d-flex">
       <div class="file-window__sidebar pa-4">
-        sdf
+        Sidebar
         <slot name="sidebar" />
       </div>
       <div class="file-window__content pa-4">
-        sdf
+        Content
         <slot name="content" />
       </div>
     </div>
@@ -89,10 +89,10 @@ export default {
       this.$router.go(-1);
     },
     handleMinimize() {
-      this.isMinimizing = !this.isMinimizing;
-      // this.uiStore.minimizeWindow(this.window);
-      // this.handleClose();
-      // this.isMinimizing = false;
+      // this.isMinimizing = !this.isMinimizing;
+      this.uiStore.minimizeWindow(this.window);
+      this.handleClose();
+      this.isMinimizing = false;
     },
   },
 };
@@ -122,7 +122,7 @@ export default {
   }
   &.active {
     :deep(.drag-box) {
-      box-shadow: 10px 10px 2px 0 rgba(0, 0, 0, 0.65);
+      box-shadow: -10px 10px 6px 0 rgba(0, 0, 0, 0.5);
     }
   }
 }

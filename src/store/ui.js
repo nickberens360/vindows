@@ -32,7 +32,11 @@ export const useUiStore = defineStore('ui', {
       }
     },
     addActiveWindow(window) {
+      if (this.activeWindows.includes(window)) return;
       this.activeWindows.push(window);
+      if (this.minimizedWindows.includes(window)) {
+        this.removeMinimizedWindow(window);
+      }
     },
     removeActiveWindow(window) {
       let index = this.activeWindows.indexOf(window);
@@ -41,6 +45,10 @@ export const useUiStore = defineStore('ui', {
     minimizeWindow(window) {
       if (this.minimizedWindows.includes(window)) return;
       this.minimizedWindows.push(window);
+    },
+    removeMinimizedWindow(window) {
+      let index = this.minimizedWindows.indexOf(window);
+      this.minimizedWindows.splice(index, 1);
     }
   }
 });
