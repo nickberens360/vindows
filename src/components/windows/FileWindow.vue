@@ -2,38 +2,46 @@
   <AppDragBox
     :id="id"
     class="file-window"
-    :class="{active: isActive}"
+    :class="{active: isActive, minimizing: isMinimizing}"
     @drag-box-clicked="handleClick"
   >
     <template #drag-area>
       <v-toolbar
-        height="30"
-        color="black"
-        class="text-white file-window__header d-flex align-center justify-space-between"
+        height="40"
+        color="#f1ebde"
+        class=" file-window__header d-flex align-center justify-space-between pl-2"
       >
         <template #append>
           <v-icon
             icon="fal fa-minus-square"
-            color="white"
             @click="handleMinimize"
           />
           <v-icon
             icon="far fa-times"
-            color="white"
             @click="handleClose"
           />
         </template>
-        <p>
+        <div>
           {{ window.title }}
-        </p>
+        </div>
       </v-toolbar>
     </template>
-    <template #default>
-      <slot name="default" />
-    </template>
-    <template #footer>
-      resize handle here
-    </template>
+
+
+
+    <div class="file-window__layout d-flex">
+      <div class="file-window__sidebar pa-4">
+        sdf
+        <slot name="sidebar" />
+      </div>
+      <div class="file-window__content pa-4">
+        sdf
+        <slot name="content" />
+      </div>
+    </div>
+    <!--    <template #footer>-->
+    <!--      resize handle here-->
+    <!--    </template>-->
   </AppDragBox>
 </template>
 
@@ -56,6 +64,11 @@ export default {
       default: () => {},
     },
   },
+  data() {
+    return {
+      isMinimizing: false,
+    };
+  },
   computed: {
     ...mapStores(useUiStore),
     isActive() {
@@ -76,8 +89,10 @@ export default {
       this.$router.go(-1);
     },
     handleMinimize() {
-      this.uiStore.minimizeWindow(this.window);
-      this.handleClose();
+      this.isMinimizing = !this.isMinimizing;
+      // this.uiStore.minimizeWindow(this.window);
+      // this.handleClose();
+      // this.isMinimizing = false;
     },
   },
 };
@@ -87,21 +102,57 @@ export default {
 .file-window {
   :deep(.drag-box) {
     z-index: 100;
-    border: 1px solid #000;
-    background-color: #fff;
-    height: 400px;
+    border: 2px solid #000;
+    background-color: #f1ebde;
     width: 500px;
+    height: 400px;
     resize: both;
     overflow: auto;
+    border-radius: 10px;
+  }
+  &.minimizing {
+    :deep(.drag-box) {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: calc(var(--v-layout-top) * 1) !important;
+      left: 0 !important;
+      right: 0 !important;
+    }
   }
   &.active {
     :deep(.drag-box) {
-      box-shadow: 7px 7px 5px -3px rgba(0,0,0,0.36);
+      box-shadow: 10px 10px 2px 0 rgba(0, 0, 0, 0.65);
     }
   }
 }
 .file-window__header {
   cursor: move;
+  border-bottom: 2px solid #000;
 }
+
+.file-window__layout {
+  height: calc(100% - 40px);
+}
+
+.file-window__sidebar {
+  width: 150px;
+  min-width: 0;
+  border-right: 2px solid #000;
+}
+
+.file-window__content {
+  flex-grow: 1; // Fill remaining space
+  min-width: 0; // Don't use more space than available
+}
+
+:deep(.drag-box__handle) {
+  position: sticky;
+  top: 0;
+}
+
+
+
+
 
 </style>

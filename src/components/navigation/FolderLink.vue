@@ -8,13 +8,13 @@
     >
       <div>
         <div class="folder-icon">
-          <div class="folder-icon__back bg-gray-200" />
-          <div class="folder-icon__front bg-white" />
+          <div class="folder-icon__back" />
+          <div class="folder-icon__front" />
         </div>
         <slot name="label">
-          <span class="desktop-item__label d-block bg-blue mt-1 rounded-xl text-white text-center">{{
-            title
-          }}</span>
+          <!--          <span class="desktop-item__label d-block bg-blue mt-1 rounded-xl text-white text-center">{{-->
+          <!--            title-->
+          <!--          }}</span>-->
         </slot>
       </div>
     </div>
@@ -53,14 +53,7 @@ export default {
   max-height: 115px;
   max-width: 100px;
   margin: auto auto 15px;
-
 }
-
-.active-z-index .desktop-item__label {
-  background-color: #414141;
-  @apply bg-blue-700;
-}
-
 
 .folder-icon {
   position: relative;
@@ -75,6 +68,7 @@ export default {
   height: 100%;
   border-radius: 10px;
   border: 2px solid black;
+  background: #f6d898;
 }
 
 .folder-icon__back:after {
@@ -87,7 +81,7 @@ export default {
   height: 5px;
   border: 2px solid black;
   border-bottom: none;
-  background: #f1ebde;
+  background: #f6d898;
   transform: skew(-27deg);
 }
 
@@ -101,7 +95,7 @@ export default {
   height: 5px;
   border: 2px solid black;
   border-bottom: none;
-  background: #f1ebde;
+  background: #f6d898;
   transform: skew(27deg);
 }
 .folder-icon__front {
@@ -111,6 +105,7 @@ export default {
   width: 100%;
   height: 80px;
   border: 2px solid black;
+  background: #ffd57c;
   transform: skewX(5deg);
   transform-origin: bottom;
   border-radius: 10px;

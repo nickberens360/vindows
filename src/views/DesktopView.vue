@@ -10,7 +10,9 @@
         disable-route-watcher
         elevation="0"
         :scrim="false"
+        width="150"
         style="z-index: 10;"
+        color="transparent"
       >
         <FolderLink
           v-for="item in uiStore.windows"
@@ -29,13 +31,7 @@
         :window="window"
         :initial-x="index * 50"
         :initial-y="index * 50"
-      >
-        <template #default>
-          <div class="d-flex justify-center align-center">
-            <h1>{{ window.title }}</h1>
-          </div>
-        </template>
-      </FileWindow>
+      />
     </div>
   </DesktopLayout>
 </template>

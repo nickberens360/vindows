@@ -1,6 +1,6 @@
 <template>
   <div
-    class="position-relative"
+    class="position-relative drag-box-container"
   >
     <div
       :id="id"
