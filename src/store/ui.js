@@ -5,17 +5,18 @@ export const useUiStore = defineStore('ui', {
     return {
       windows: [
         {
-          id: 'testOne',
-          title: 'Test One',
+          id: 'about',
+          title: 'About',
+          windowType: 'FileWindow',
         },
-        {
-          id: 'testTwo',
-          title: 'Test Two',
-        },
-        {
-          id: 'testThree',
-          title: 'Test Three',
-        }
+        // {
+        //   id: 'testTwo',
+        //   title: 'Test Two',
+        // },
+        // {
+        //   id: 'testThree',
+        //   title: 'Test Three',
+        // }
       ],
       activeWindow: {},
       activeWindows: [],

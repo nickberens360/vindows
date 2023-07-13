@@ -13,8 +13,6 @@
             {{ title }}
           </div>
         </div>
-        <!--        <slot name="label">-->
-        <!--        </slot>-->
       </div>
     </div>
   </router-link>
