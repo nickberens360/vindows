@@ -27,8 +27,6 @@
       </v-toolbar>
     </template>
 
-
-
     <div class="file-window__layout d-flex">
       <div class="file-window__sidebar pa-4">
         Sidebar

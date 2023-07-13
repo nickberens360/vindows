@@ -18,6 +18,11 @@ const router = createRouter({
       path: '/:id',
       name: 'window',
       component: () => import('@/views/DesktopView'),
+      children: [
+        {
+          path: 'dashboard',
+        }
+      ]
     },
 
 
