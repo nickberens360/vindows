@@ -34,7 +34,9 @@
       </div>
       <div class="file-window__content pa-4">
         Content
-        <slot name="content" />
+        <router-view>
+          <slot name="content" />
+        </router-view>
       </div>
     </div>
     <!--    <template #footer>-->

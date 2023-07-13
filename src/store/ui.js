@@ -9,6 +9,12 @@ export const useUiStore = defineStore('ui', {
           title: 'About',
           windowType: 'FileWindow',
         },
+        {
+          id: 'projects',
+          title: 'Projects',
+          windowType: 'FileWindow',
+        },
+
         // {
         //   id: 'testTwo',
         //   title: 'Test Two',

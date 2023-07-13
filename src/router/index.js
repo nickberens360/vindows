@@ -20,7 +20,9 @@ const router = createRouter({
       component: () => import('@/views/DesktopView'),
       children: [
         {
-          path: 'dashboard',
+          path: '/:id',
+          name: 'detail',
+          component: () => import('@/components/windows/FileWindow.vue'),
         }
       ]
     },
