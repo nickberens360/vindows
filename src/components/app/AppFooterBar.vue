@@ -63,13 +63,14 @@ export default {
 
 .v-footer {
   transform: translateX(-50%) !important;
-  width: 800px !important;
+  width: 1000px !important;
   bottom: 0 !important;
   left: 50% !important;
   right: 50% !important;
   background: rgb(238,238,238);
   background: linear-gradient(313deg, rgba(238,238,238,1) 23%, rgba(210,210,210,1) 99%);
   transition: bottom 0.3s ease-in-out;
+
   &:hover {
     bottom: 75px !important;
   }
@@ -119,15 +120,15 @@ export default {
     position: absolute;
     z-index: -1;
     bottom: -20px;
-    width: 50%;
+    width: 20%;
     height: 4px;
     left: 50%;
     right: 50%;
     transform: translateX(-50%);
     background: black;
-    filter: blur(6px);
-    opacity: 1;
-    border-radius: 100px;
+    //filter: blur(6px);
+    opacity: .5;
+    border-radius: 50%;
   }
 
 }
@@ -138,7 +139,7 @@ export default {
   left: 50%;
   right: 50%;
   transform: translateX(-50%);
-  width: 1015px;
+  width: 1215px;
   margin: auto;
   bottom: -20px;
   height: 20px;
@@ -149,14 +150,15 @@ export default {
   position: absolute;
   z-index: -1;
   transform: translateX(-50%) !important;
-  width: 800px !important;
+  width: 1000px !important;
+
   height: 50px !important;
   bottom: -65px !important;
   left: 50% !important;
   right: 50% !important;
   background: black;
-  filter: blur(5px);
-  opacity: 0.50;
+  //filter: blur(5px);
+  opacity: 0.30;
   &:before {
     content: "";
     position: absolute;

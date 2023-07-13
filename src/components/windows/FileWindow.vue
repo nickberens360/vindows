@@ -89,10 +89,14 @@ export default {
       this.$router.go(-1);
     },
     handleMinimize() {
-      // this.isMinimizing = !this.isMinimizing;
+      this.isMinimizing = !this.isMinimizing;
       this.uiStore.minimizeWindow(this.window);
       this.handleClose();
-      this.isMinimizing = false;
+      // setTimeout(() => {
+      //   this.uiStore.minimizeWindow(this.window);
+      //   this.handleClose();
+      //   this.isMinimizing = false;
+      // }, 1000);
     },
   },
 };
@@ -104,21 +108,11 @@ export default {
     z-index: 100;
     border: 2px solid #000;
     background-color: #f1ebde;
-    width: 500px;
-    height: 400px;
+    width: 700px;
+    height: 500px;
     resize: both;
     overflow: auto;
-    border-radius: 10px;
-  }
-  &.minimizing {
-    :deep(.drag-box) {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      top: calc(var(--v-layout-top) * 1) !important;
-      left: 0 !important;
-      right: 0 !important;
-    }
+    border-radius: 10px 10px 0 10px;
   }
   &.active {
     :deep(.drag-box) {
