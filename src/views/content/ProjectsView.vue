@@ -1,9 +1,9 @@
 <template>
-  About View
+  Projects View
 </template>
 
 <script>
 export default {
-  name: 'AboutView',
+  name: 'ProjectsView',
 };
 </script>

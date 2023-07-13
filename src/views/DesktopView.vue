@@ -29,6 +29,7 @@
         :id="window.id"
         :key="window.id"
         :window="window"
+        :content="window.content"
         :initial-x="index * 50"
         :initial-y="index * 50"
       />

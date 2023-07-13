@@ -33,10 +33,10 @@
         <slot name="sidebar" />
       </div>
       <div class="file-window__content pa-4">
-        Content
-        <router-view>
-          <slot name="content" />
-        </router-view>
+        <slot name="content">
+          {{ content }}
+          <component :is="content" />
+        </slot>
       </div>
     </div>
     <!--    <template #footer>-->
@@ -50,6 +50,8 @@ import AppDragBox from '@/components/app/AppDragBox.vue';
 import { mapStores } from 'pinia';
 import { useUiStore } from '@/store/ui';
 
+
+
 export default {
   name: 'FileWindow',
   components: { AppDragBox },
@@ -62,6 +64,10 @@ export default {
     window: {
       type: Object,
       default: () => {},
+    },
+    content: {
+      type: String,
+      default: '',
     },
   },
   data() {
