@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     handleClick() {
-      this.uiStore.setActiveWindow(this.window);
+      this.uiStore.addActiveWindow(this.window);
       this.$router.push({ name: 'window', params: { id: this.id } });
     },
     handleClose() {

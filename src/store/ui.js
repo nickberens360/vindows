@@ -32,6 +32,7 @@ export const useUiStore = defineStore('ui', {
       }
     },
     addActiveWindow(window) {
+      this.setActiveWindow(window);
       if (this.activeWindows.includes(window)) return;
       this.activeWindows.push(window);
       if (this.minimizedWindows.includes(window)) {
