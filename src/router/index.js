@@ -18,13 +18,6 @@ const router = createRouter({
       path: '/:id',
       name: 'window',
       component: () => import('@/views/DesktopView'),
-      children: [
-        {
-          path: '/:id',
-          name: 'detail',
-          component: () => import('@/components/windows/FileWindow.vue'),
-        }
-      ]
     },
 
 
