@@ -22,7 +22,7 @@
           />
         </template>
         <div class="font-weight-semibold">
-          {{ window.title }}
+          {{ window.name }}
         </div>
       </v-toolbar>
     </template>
@@ -34,8 +34,11 @@
       </div>
       <div class="file-window__content pa-4">
         <slot name="content">
-          {{ content }}
-          <component :is="content" />
+          {{ isActive }} <br>
+          {{ updateZIndex }} <br>
+          {{ id }}
+          <pre>{{ computedContent }}</pre>
+          <!--          <component :is="content" />-->
         </slot>
       </div>
     </div>
@@ -66,8 +69,8 @@ export default {
       default: () => {},
     },
     content: {
-      type: String,
-      default: '',
+      type: Object,
+      default: () => {},
     },
   },
   data() {
@@ -78,14 +81,30 @@ export default {
   computed: {
     ...mapStores(useUiStore),
     isActive() {
-      return this.uiStore.activeWindow.id === this.id;
+      return this.uiStore.activeWindow.name === this.id;
+    },
+    updateZIndex() {
+      if (this.isActive) {
+        return 100;
+      } else {
+        return 'unset';
+      }
+    },
+
+    computedContent() {
+      if (this.isActive) {
+        console.log('isActive', this.isActive);
+        return this.uiStore.activeWindowContent;
+      } else {
+        console.log('isNotActive', this.isActive);
+        return this.content;
+      }
     },
   },
   methods: {
-    handleClick() {
-      console.log('handleClick');
-      // this.uiStore.addActiveWindow(this.window);
-      // this.$router.push({ name: 'window', params: { id: this.id } });
+    async handleClick() {
+      await this.uiStore.setActiveWindow(this.window);
+      // this.$router.push({ name: 'explorer', params: { id: this.uiStore.activeWindow.name } });
     },
     handleClose() {
       this.uiStore.removeActiveWindow(this.window);
@@ -111,8 +130,8 @@ export default {
 
 <style scoped lang="scss">
 .file-window {
+  position: relative;
   :deep(.drag-box) {
-    z-index: 100;
     border: 2px solid #000;
     background-color: #f1ebde;
     width: 700px;
@@ -122,6 +141,7 @@ export default {
     border-radius: 10px 10px 0 10px;
   }
   &.active {
+    z-index: v-bind(updateZIndex);
     :deep(.drag-box) {
       box-shadow: -10px 10px 6px 0 rgba(0, 0, 0, 0.5);
     }

@@ -10,7 +10,7 @@
         disable-route-watcher
         elevation="0"
         :scrim="false"
-        width="150"
+        width="500"
         style="z-index: 10;"
         color="transparent"
       >
@@ -23,23 +23,11 @@
           class="ma-2"
         />-->
 
-        <router-link
-          to="/explorer"
-          class="ma-2"
-        >
-          Explorer
-        </router-link>
-        <router-link
-          to="/explorer/documents"
-          class="ma-2"
-          @click="uiStore.addActiveWindow({
-            id: 'test',
-            title: 'Test',
-            name: 'test',
-          })"
-        >
-          Documents
-        </router-link>
+        <FileTree
+          class="ml-16 mt-8"
+          open-in-new-window
+        />
+        <pre>{{ uiStore.activeWindows }}</pre>
       </v-navigation-drawer>
 
 
@@ -50,20 +38,20 @@
 
       <FileWindow
         v-for="(window, index) in uiStore.activeWindows"
-        :id="window.id"
-        :key="window.id"
+        :id="window.name"
+        :key="window.name"
         :window="window"
-        :content="window.content"
+        :content="window"
         :initial-x="index * 50"
         :initial-y="index * 50"
       >
         <template #sidebar>
-          <FileTree @folder-clicked="updateFolderContent($event)" />
+          <FileTree />
         </template>
-        <template #content>
-          <FolderContent />
-          <pre>{{ folderContent }}</pre>
-        </template>
+        <!--        <template #content>-->
+        <!--          <FolderContent />-->
+        <!--          <pre>{{ folderContent }}</pre>-->
+        <!--        </template>-->
       </FileWindow>
     </div>
   </DesktopLayout>
@@ -105,7 +93,7 @@ export default {
   },
   methods: {
     updateFolderContent(folder) {
-      this.folderContent = folder;
+      // this.folderContent = folder;
       console.log('Desktop', folder);
     },
     initStoreData() {

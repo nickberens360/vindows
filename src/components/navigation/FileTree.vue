@@ -22,6 +22,12 @@ import { useUiStore } from '@/store/ui';
 
 export default {
   name: 'FileTree',
+  props: {
+    openInNewWindow: {
+      type: Boolean,
+      default: false,
+    },
+  },
   emits: ['folder-clicked'],
   computed: {
     ...mapStores(useFileManagerStore, useUiStore),
@@ -31,9 +37,9 @@ export default {
   },
   methods: {
     handleFolderClick(folder) {
-      console.log('handleFolderClick', folder);
-      this.$emit('folder-clicked', folder);
-      this.uiStore.setActiveWindow(folder);
+      this.uiStore.addActiveWindow(folder, this.openInNewWindow);
+      this.uiStore.activeWindowContent = folder;
+
     },
     getFolderPath(folder) {
       console.log('Folder', folder);

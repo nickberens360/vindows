@@ -29,34 +29,33 @@ export const useUiStore = defineStore('ui', {
         // }
       ],
       activeWindow: {},
-      activeWindows: [
-        {
-          id: 'explorer',
-          title: 'Explorer',
-          windowType: 'FileWindow',
-          content: 'AboutView',
-        },
-      ],
+      activeWindowContent: {},
+      activeWindows: [],
       minimizedWindows: [],
     };
   },
   actions: {
     setActiveWindow(window) {
+      console.log('setActiveWindow', window);
       this.activeWindow = window;
-      const index = this.activeWindows.indexOf(window);
-      if (index !== -1) {
-        this.activeWindows.splice(index, 1);
-        this.activeWindows.push(window);
-      }
+      // const index = this.activeWindows.indexOf(window);
+      // if (index !== -1) {
+      //   this.activeWindows.splice(index, 1);
+      //   this.activeWindows.push(window);
+      // }
     },
-    addActiveWindow(window) {
-      console.log('addActiveWindow', window);
+    async addActiveWindow(window, openInNewWindow = false) {
+      // if (this.activeWindow === window) return;
+      console.log('New Window', openInNewWindow);
+      if (!openInNewWindow) return;
       this.setActiveWindow(window);
       if (this.activeWindows.includes(window)) return;
-      this.activeWindows.push(window);
-      if (this.minimizedWindows.includes(window)) {
-        this.removeMinimizedWindow(window);
-      }
+      await this.activeWindows.push(window);
+      // if (this.activeWindows.includes(window)) return;
+      // this.activeWindows.push(window);
+      // if (this.minimizedWindows.includes(window)) {
+      //   this.removeMinimizedWindow(window);
+      // }
     },
     removeActiveWindow(window) {
       let index = this.activeWindows.indexOf(window);
