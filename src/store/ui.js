@@ -1,8 +1,10 @@
 import { defineStore } from 'pinia';
+import fileSystem from '@/data/fileSystem';
 
 export const useUiStore = defineStore('ui', {
   state: () => {
     return {
+      systemWindows: JSON.parse(JSON.stringify(fileSystem)),
       windows: [
         {
           id: 'about',
@@ -27,7 +29,14 @@ export const useUiStore = defineStore('ui', {
         // }
       ],
       activeWindow: {},
-      activeWindows: [],
+      activeWindows: [
+        {
+          id: 'explorer',
+          title: 'Explorer',
+          windowType: 'FileWindow',
+          content: 'AboutView',
+        },
+      ],
       minimizedWindows: [],
     };
   },
@@ -41,6 +50,7 @@ export const useUiStore = defineStore('ui', {
       }
     },
     addActiveWindow(window) {
+      console.log('addActiveWindow', window);
       this.setActiveWindow(window);
       if (this.activeWindows.includes(window)) return;
       this.activeWindows.push(window);

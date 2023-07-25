@@ -14,15 +14,39 @@
         style="z-index: 10;"
         color="transparent"
       >
-        <FolderLink
+        <!--        <FolderLink
           v-for="item in uiStore.windows"
           :id="item.id"
           :key="item.id"
           :window="item"
           :title="item.title"
           class="ma-2"
-        />
+        />-->
+
+        <router-link
+          to="/explorer"
+          class="ma-2"
+        >
+          Explorer
+        </router-link>
+        <router-link
+          to="/explorer/documents"
+          class="ma-2"
+          @click="uiStore.addActiveWindow({
+            id: 'test',
+            title: 'Test',
+            name: 'test',
+          })"
+        >
+          Documents
+        </router-link>
       </v-navigation-drawer>
+
+
+      {{ $route.name }}
+      <!--      {{ $route.params.id[$route.params.id.length - 1] }}-->
+
+      <!--      <pre>{{ fileManagerStore.systemWindows.root.children.filter((item) => item.name === $route.params.id[$route.params.id.length - 1]) }}</pre>-->
 
       <FileWindow
         v-for="(window, index) in uiStore.activeWindows"
@@ -32,14 +56,25 @@
         :content="window.content"
         :initial-x="index * 50"
         :initial-y="index * 50"
-      />
+      >
+        <template #sidebar>
+          <FileTree @folder-clicked="updateFolderContent($event)" />
+        </template>
+        <template #content>
+          <FolderContent />
+          <pre>{{ folderContent }}</pre>
+        </template>
+      </FileWindow>
     </div>
   </DesktopLayout>
 </template>
 
 <script>
+import FileTree from '@/components/navigation/FileTree.vue';
+import FolderContent from '@/components/windows/fileWindow/FolderContent.vue';
 import { mapStores } from 'pinia';
 import { useUiStore } from '@/store/ui';
+import { useFileManagerStore } from '@/store/fileManager';
 
 import FolderLink from '@/components/navigation/FolderLink.vue';
 import DesktopLayout from '@/components/layouts/DesktopLayout.vue';
@@ -47,24 +82,20 @@ import FileWindow from '@/components/windows/FileWindow.vue';
 /* eslint-disable */
 export default {
   name: 'DesktopView',
-  components: { FolderLink, FileWindow, DesktopLayout },
+  components: { FolderContent, FileTree, FolderLink, FileWindow, DesktopLayout },
   data() {
     return {
       setItems: null,
       drawer: true,
+      folderContent: null,
     };
   },
   computed: {
-    ...mapStores(useUiStore),
+    ...mapStores(useUiStore, useFileManagerStore),
   },
   watch: {
     '$route'() {
-      if (this.$route.name !== 'desktop') {
-        const window = this.uiStore.windows.filter(item =>
-          item.id === this.$route.params.id
-        );
-        this.uiStore.addActiveWindow(...window);
-      }
+      this.initStoreData();
     }
   },
   mounted() {
@@ -73,11 +104,16 @@ export default {
     }
   },
   methods: {
+    updateFolderContent(folder) {
+      this.folderContent = folder;
+      console.log('Desktop', folder);
+    },
     initStoreData() {
-      const window = this.uiStore.windows.filter(item =>
-        item.id === this.$route.params.id
-      );
-      this.uiStore.addActiveWindow(...window);
+      console.log(this.$route);
+      // const window = this.uiStore.windows.filter(item =>
+      //   item.id === this.$route.params.id
+      // );
+      // this.uiStore.addActiveWindow(...window);
     },
   },
 

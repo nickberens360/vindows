@@ -7,15 +7,15 @@
     <div
       class="app-footer__container d-flex align-center justify-space-between"
     >
-      <div class="app-footer__item">
-        <FolderLink
-          :id="uiStore.windows[0].id"
-          :window="uiStore.windows[0]"
-          title="Test One"
-          class="ma-2"
-          style="top: -10px; position: relative;"
-        />
-      </div>
+      <!--      <div class="app-footer__item">-->
+      <!--        <FolderLink-->
+      <!--          :id="uiStore.windows[0].id"-->
+      <!--          :window="uiStore.windows[0]"-->
+      <!--          title="Test One"-->
+      <!--          class="ma-2"-->
+      <!--          style="top: -10px; position: relative;"-->
+      <!--        />-->
+      <!--      </div>-->
     </div>
     <div class="app-footer__minimized d-flex">
       <div

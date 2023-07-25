@@ -12,8 +12,8 @@ const router = createRouter({
       },
     },
     {
-      path: '/:id',
-      name: 'window',
+      path: '/explorer/:id*',
+      name: 'explorer',
       component: () => import('@/views/DesktopView'),
     },
 
