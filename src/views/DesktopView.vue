@@ -92,10 +92,6 @@ export default {
     }
   },
   methods: {
-    updateFolderContent(folder) {
-      // this.folderContent = folder;
-      console.log('Desktop', folder);
-    },
     initStoreData() {
       console.log(this.$route);
       // const window = this.uiStore.windows.filter(item =>

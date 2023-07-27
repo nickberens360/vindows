@@ -22,7 +22,7 @@
           />
         </template>
         <div class="font-weight-semibold">
-          {{ window.name }}
+          {{ title }}
         </div>
       </v-toolbar>
     </template>
@@ -35,9 +35,9 @@
       <div class="file-window__content pa-4">
         <slot name="content">
           {{ isActive }} <br>
-          {{ updateZIndex }} <br>
           {{ id }}
-          <pre>{{ computedContent }}</pre>
+          <ContentView :content="computedContent" />
+          <!--          <pre>{{ computedContent }}</pre>-->
           <!--          <component :is="content" />-->
         </slot>
       </div>
@@ -50,6 +50,7 @@
 
 <script>
 import AppDragBox from '@/components/app/AppDragBox.vue';
+import ContentView from '@/views/content/ContentView.vue';
 import { mapStores } from 'pinia';
 import { useUiStore } from '@/store/ui';
 
@@ -57,7 +58,7 @@ import { useUiStore } from '@/store/ui';
 
 export default {
   name: 'FileWindow',
-  components: { AppDragBox },
+  components: { ContentView, AppDragBox },
   props: {
     id: {
       type: String,
@@ -67,6 +68,10 @@ export default {
     window: {
       type: Object,
       default: () => {},
+    },
+    title: {
+      type: String,
+      default: 'Explorer',
     },
     content: {
       type: Object,

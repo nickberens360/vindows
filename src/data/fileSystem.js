@@ -10,7 +10,7 @@ const fileSystem = {
       {
         name: 'documents',
         type: 'folder',
-        component: 'DocumentsView',
+        depth: 1,
         children: [
           {
             name: 'resume.pdf',
@@ -22,27 +22,24 @@ const fileSystem = {
       {
         name: 'projects',
         type: 'folder',
-        component: 'ProjectsView',
+        depth: 1,
         children: [
           {
             name: 'atomic-docs',
             type: 'file',
-            component: 'AtomicDocsView',
           },
           {
             name: 'tedx-fond-du-lac',
             type: 'file',
-            component: 'TedxView',
           },
           {
             name: 'archived-portfolio-sites',
             type: 'folder',
-            component: 'ArchivedPortfolioSitesView',
+            depth: 2,
             children: [
               {
                 name: 'portfolio-site-2010',
                 type: 'file',
-                component: 'PortfolioSite2010View',
               }
             ],
           }
@@ -51,27 +48,24 @@ const fileSystem = {
       {
         name: 'about',
         type: 'folder',
-        component: 'AboutView',
+        depth: 1,
         children: [
           {
             name: 'me',
             type: 'file',
-            component: 'MeView',
           },
           {
             name: 'cats',
             type: 'folder',
-            component: 'CatsView',
+            depth: 2,
             children: [
               {
                 name: 'richard-parker',
                 type: 'file',
-                component: 'RichardParkerView',
               },
               {
                 name: 'barbara-walters',
                 type: 'file',
-                component: 'BarbaraWaltersView',
               },
             ],
           },
