@@ -63,8 +63,9 @@ function generateRoutesFromFileSystem(fileSystemData, currentPath = '') {
     if (item.type === 'folder' && item.depth === 1) {
       component = () => import('@/views/DesktopView');
     } else if (item.type === 'folder' && item.depth > 1) {
-      component = () => import('@/views/content/ContentView.vue');
+      component = () => import('@/views/content/SubContentView.vue');
     } else if (item.type === 'file') {
+      console.log('item', item.type, item.name);
       component = () => import('@/views/content/FileView.vue');
     }
 

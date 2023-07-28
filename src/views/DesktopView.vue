@@ -93,7 +93,7 @@ export default {
   },
   methods: {
     initStoreData() {
-      console.log(this.$route);
+      console.log('initStoreData');
       // const window = this.uiStore.windows.filter(item =>
       //   item.id === this.$route.params.id
       // );

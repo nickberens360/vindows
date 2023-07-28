@@ -36,7 +36,6 @@ export const useUiStore = defineStore('ui', {
   },
   actions: {
     setActiveWindow(window) {
-      console.log('setActiveWindow', window);
       this.activeWindow = window;
       // const index = this.activeWindows.indexOf(window);
       // if (index !== -1) {
@@ -46,7 +45,6 @@ export const useUiStore = defineStore('ui', {
     },
     async addActiveWindow(window, openInNewWindow = false) {
       // if (this.activeWindow === window) return;
-      console.log('New Window', openInNewWindow);
       if (!openInNewWindow) return;
       this.setActiveWindow(window);
       if (this.activeWindows.includes(window)) return;

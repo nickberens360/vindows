@@ -73,7 +73,6 @@ export default {
     },
     handleMouseDown(event) {
       event.preventDefault();
-      console.log('handleMouseDown', event);
       this.$emit('drag-box-clicked');
       const {clientX, clientY} = event;
       let currentX = clientX;

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <pre>{{ content.children }}</pre>
     <!--    TODO: Check for nested children-->
     <ul v-if="content.children">
       <li
@@ -8,23 +7,22 @@
         :key="item.name"
       >
         <router-link
-          :to="{
-            name: item.name,
-          }"
+          :to="{name: item.name,}"
+          @click="handleFolderClick(item)"
         >
           {{ item.name }}
         </router-link>
       </li>
     </ul>
-    <router-view />
-    <!--    <pre-->
-    <!--      v-for="item in content"-->
-    <!--      :key="item.name"-->
-    <!--    >{{ item.name }}</pre>-->
-    <!--    <pre>{{ content.children }}</pre>-->
+    <router-view :key="$router.fullPath" />
+    <pre>{{ content.children }}</pre>
   </div>
 </template>
 <script>
+
+import { useUiStore } from '@/store/ui';
+import { mapStores } from 'pinia';
+
 
 export default {
   name: 'ContentView',
@@ -32,6 +30,16 @@ export default {
     content: {
       type: Object,
       default: () => {},
+    },
+  },
+  computed: {
+    ...mapStores(useUiStore),
+  },
+  methods: {
+    handleFolderClick(folder) {
+      console.log('handleFolderClick', folder);
+      this.uiStore.addActiveWindow(folder, false);
+      this.uiStore.activeWindowContent = folder;
     },
   },
 };

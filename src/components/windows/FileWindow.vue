@@ -98,10 +98,8 @@ export default {
 
     computedContent() {
       if (this.isActive) {
-        console.log('isActive', this.isActive);
         return this.uiStore.activeWindowContent;
       } else {
-        console.log('isNotActive', this.isActive);
         return this.content;
       }
     },

@@ -39,10 +39,8 @@ export default {
     handleFolderClick(folder) {
       this.uiStore.addActiveWindow(folder, this.openInNewWindow);
       this.uiStore.activeWindowContent = folder;
-
     },
     getFolderPath(folder) {
-      console.log('Folder', folder);
       const currentPath = this.$router?.fullPath || '';
       return `/explorer${currentPath}/${encodeURIComponent(folder.name)}`;
     },
