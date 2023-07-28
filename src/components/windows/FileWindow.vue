@@ -29,14 +29,39 @@
 
     <div class="file-window__layout d-flex">
       <div class="file-window__sidebar pa-4">
-        Sidebar
-        <slot name="sidebar" />
+        <v-tabs
+          v-model="tab"
+          direction="vertical"
+          color="primary"
+        >
+          <v-tab
+            v-for="item in topLevelFolders"
+            :key="item.name"
+            :value="item.name"
+            :to="{ name: item.name }"
+            :disabled="!isActive"
+          >
+            {{ item.name }}
+          </v-tab>
+        </v-tabs>
       </div>
       <div class="file-window__content pa-4">
         <slot name="content">
-          {{ isActive }} <br>
-          {{ id }}
-          <ContentView :content="computedContent" />
+          <v-window v-model="tab">
+            <v-window-item
+              v-for="item in topLevelFolders"
+              :key="item.name"
+              :value="item.name"
+            >
+              <ContentView
+                :content="item"
+                :is-active="isActive"
+              />
+            </v-window-item>
+          </v-window>
+
+
+          <!--          <ContentView :content="computedContent" />-->
           <!--          <pre>{{ computedContent }}</pre>-->
           <!--          <component :is="content" />-->
         </slot>
@@ -49,10 +74,12 @@
 </template>
 
 <script>
+/*eslint-disable*/
 import AppDragBox from '@/components/app/AppDragBox.vue';
 import ContentView from '@/views/content/ContentView.vue';
 import { mapStores } from 'pinia';
 import { useUiStore } from '@/store/ui';
+import { useFileManagerStore } from '@/store/fileManager';
 
 
 
@@ -81,10 +108,14 @@ export default {
   data() {
     return {
       isMinimizing: false,
+      tab: this.id,
     };
   },
   computed: {
-    ...mapStores(useUiStore),
+    ...mapStores(useUiStore, useFileManagerStore),
+    topLevelFolders() {
+      return this.fileManagerStore.systemWindows.root.children.filter((item) => item.type === 'folder');
+    },
     isActive() {
       return this.uiStore.activeWindow.name === this.id;
     },
@@ -105,6 +136,7 @@ export default {
     },
   },
   methods: {
+
     async handleClick() {
       await this.uiStore.setActiveWindow(this.window);
       // this.$router.push({ name: 'explorer', params: { id: this.uiStore.activeWindow.name } });
@@ -140,7 +172,7 @@ export default {
     width: 700px;
     height: 500px;
     resize: both;
-    overflow: auto;
+    overflow: hidden;
     border-radius: 10px 10px 0 10px;
   }
   &.active {
@@ -161,6 +193,8 @@ export default {
 
 .file-window__sidebar {
   width: 150px;
+  flex: 1 0 150px;
+  max-width: 150px;
   min-width: 0;
   border-right: 2px solid #000;
 }
@@ -168,6 +202,8 @@ export default {
 .file-window__content {
   flex-grow: 1; // Fill remaining space
   min-width: 0; // Don't use more space than available
+  height: 100%;
+  overflow: auto;
 }
 
 :deep(.drag-box__handle) {
