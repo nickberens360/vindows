@@ -40,6 +40,7 @@
         v-for="(window, index) in uiStore.activeWindows"
         :id="window.name"
         :key="window.name"
+        :window-id="`window-${index}`"
         :window="window"
         :content="window"
         :initial-x="index * 50"

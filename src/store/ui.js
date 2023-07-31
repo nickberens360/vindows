@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia';
 import fileSystem from '@/data/fileSystem';
+import { findSystemNodeByName } from '@/utilities/systemUtils';
+
 
 export const useUiStore = defineStore('ui', {
   state: () => {
@@ -30,11 +32,38 @@ export const useUiStore = defineStore('ui', {
       ],
       activeWindow: {},
       activeWindowContent: {},
-      activeWindows: [],
+      activeWindows: [{
+        windowId: undefined,
+        activeSystemDataNode: undefined,
+        isActive: false,
+      }],
       minimizedWindows: [],
     };
   },
   actions: {
+    findItemByName(name) {
+      return findSystemNodeByName(name, this.systemWindows.root);
+    },
+
+    setActiveWindows(windowId, activeSystemDataNode) {
+      const existingWindowIndex = this.activeWindows.findIndex(
+        (window) => window.windowId === windowId
+      );
+
+      if (existingWindowIndex !== -1) {
+        // Window already exists, update its properties
+        this.activeWindows[existingWindowIndex].activeSystemDataNode = activeSystemDataNode;
+        this.activeWindows[existingWindowIndex].isActive = true;
+      } else {
+        // Window does not exist, add a new window to the array
+        this.activeWindows.push({
+          windowId,
+          activeSystemDataNode,
+          isActive: true,
+        });
+      }
+    },
+
     setActiveWindow(window) {
       this.activeWindow = window;
       // const index = this.activeWindows.indexOf(window);
@@ -67,5 +96,6 @@ export const useUiStore = defineStore('ui', {
       let index = this.minimizedWindows.indexOf(window);
       this.minimizedWindows.splice(index, 1);
     }
-  }
+  },
+
 });

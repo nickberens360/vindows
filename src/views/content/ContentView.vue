@@ -1,31 +1,39 @@
 <template>
-  <ul>
-    <li
-      v-for="item in content.children"
-      :key="item.name"
-    >
-      <router-link
-        :to="{ name: item.name }"
+  <div>
+    <ul>
+      <li
+        v-for="item in content.children"
+        :key="item.name"
       >
-        {{ item.name }}
-      </router-link>
-    </li>
-  </ul>
-  {{ content }}
-  <!--    <v-tabs
+        <router-link
+          :to="{name: item.name }"
+          @click="handleFolderClick(item)"
+        >
+          {{ item.name }}
+        </router-link>
+      </li>
+    </ul>
+    {{ isActive }}
+
+
+    <!--    <v-tabs
       v-if="content.children"
       v-model="tab"
       color="primary"
       :disabled="!isActive"
     >
-      <v-tab
+      <div
         v-for="item in content.children"
         :key="item.name"
-        :value="item.name"
-        :to="{ name: item.name }"
       >
-        {{ item.name }}
-      </v-tab>
+        <v-tab
+          v-if="item.children && !hideTabs"
+          :value="item.name"
+          :to="{ name: item.name }"
+        >
+          {{ item.name }}
+        </v-tab>
+      </div>
     </v-tabs>
     <v-window
       v-if="content.children"
@@ -36,10 +44,11 @@
         :key="item.name"
         :value="item.name"
       >
-        <pre>{{ item }}</pre>
         <pre v-if="item.children">{{ item.children }}</pre>
+        <pre v-else>{{ item }}</pre>
       </v-window-item>
     </v-window>-->
+  </div>
 </template>
 <script>
 
@@ -58,7 +67,12 @@ export default {
       type: Boolean,
       default: false,
     },
+    hideTabs: {
+      type: Boolean,
+      default: false,
+    },
   },
+  emits: ['folder-clicked'],
   data() {
     return {
       tab: this.content.name,
@@ -69,7 +83,7 @@ export default {
   },
   methods: {
     handleFolderClick(folder) {
-      console.log('handleFolderClick', folder);
+      this.$emit('folder-clicked', folder);
       this.uiStore.addActiveWindow(folder, false);
       this.uiStore.activeWindowContent = folder;
     },

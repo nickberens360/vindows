@@ -40,6 +40,7 @@
             :value="item.name"
             :to="{ name: item.name }"
             :disabled="!isActive"
+            @click="contentPane = null"
           >
             {{ item.name }}
           </v-tab>
@@ -47,16 +48,24 @@
       </div>
       <div class="file-window__content pa-4">
         <slot name="content">
-          <v-window v-model="tab">
+          <v-window
+            v-model="tab"
+            disabled
+          >
             <v-window-item
               v-for="item in topLevelFolders"
               :key="item.name"
               :value="item.name"
             >
+              <pre v-if="contentPane">{{ contentPane }}</pre>
               <ContentView
-                :content="item"
+                v-else
+                :content="contentPane ? item : {}"
                 :is-active="isActive"
+                @folder-clicked="handleFolderClicked($event)"
               />
+
+              <!--              <pre>{{ contentPane }}</pre>-->
             </v-window-item>
           </v-window>
 
@@ -77,6 +86,7 @@
 /*eslint-disable*/
 import AppDragBox from '@/components/app/AppDragBox.vue';
 import ContentView from '@/views/content/ContentView.vue';
+import SubContentView from '@/views/content/SubContentView.vue';
 import { mapStores } from 'pinia';
 import { useUiStore } from '@/store/ui';
 import { useFileManagerStore } from '@/store/fileManager';
@@ -85,12 +95,21 @@ import { useFileManagerStore } from '@/store/fileManager';
 
 export default {
   name: 'FileWindow',
-  components: { ContentView, AppDragBox },
+  components: { SubContentView, ContentView, AppDragBox },
   props: {
     id: {
       type: String,
       required: true,
       default: 'fileWindow',
+    },
+    windowId: {
+      type: String,
+      required: true,
+      default: 'window-1',
+    },
+    activeSystemDataNode: {
+      type: [Object, Array],
+      default: () => {},
     },
     window: {
       type: Object,
@@ -109,6 +128,7 @@ export default {
     return {
       isMinimizing: false,
       tab: this.id,
+      contentPane: {},
     };
   },
   computed: {
@@ -127,16 +147,26 @@ export default {
       }
     },
 
-    computedContent() {
-      if (this.isActive) {
-        return this.uiStore.activeWindowContent;
-      } else {
-        return this.content;
-      }
-    },
+    // computedContent() {
+    //   if (this.isActive) {
+    //     return this.uiStore.activeWindowContent;
+    //   } else {
+    //     return this.content;
+    //   }
+    // },
   },
   methods: {
-
+    handleActiveWindowContent(node) {
+      if (this.contentPane) {
+        return this.contentPane;
+      } else {
+        return node;
+      }
+    },
+    handleFolderClicked(item) {
+      console.log('handleFolderClicked', item);
+      this.contentPane = item;
+    },
     async handleClick() {
       await this.uiStore.setActiveWindow(this.window);
       // this.$router.push({ name: 'explorer', params: { id: this.uiStore.activeWindow.name } });
