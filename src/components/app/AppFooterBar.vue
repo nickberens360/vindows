@@ -7,15 +7,36 @@
     <div
       class="app-footer__container d-flex align-center justify-space-between"
     >
-      <!--      <div class="app-footer__item">-->
-      <!--        <FolderLink-->
-      <!--          :id="uiStore.windows[0].id"-->
-      <!--          :window="uiStore.windows[0]"-->
-      <!--          title="Test One"-->
-      <!--          class="ma-2"-->
-      <!--          style="top: -10px; position: relative;"-->
-      <!--        />-->
-      <!--      </div>-->
+      <router-link
+        :to="{name: 'projects'}"
+        class="app-footer__item"
+      >
+        <FolderLink
+          route-name="projects"
+          title="Projects"
+          @click="uiStore.addToActiveWindows('projects')"
+        />
+      </router-link>
+      <router-link
+        :to="{name: 'about'}"
+        class="app-footer__item"
+      >
+        <FolderLink
+          route-name="about"
+          title="About"
+          @click="uiStore.addToActiveWindows('about')"
+        />
+      </router-link>
+      <router-link
+        :to="{name: 'documents'}"
+        class="app-footer__item"
+      >
+        <FolderLink
+          route-name="documents"
+          title="Documents"
+          @click="uiStore.addToActiveWindows('documents')"
+        />
+      </router-link>
     </div>
     <!--    <div class="app-footer__minimized d-flex">
       <div
@@ -113,7 +134,7 @@ export default {
   position: relative;
   top: -38px;
   width: 150px;
-  height: 100px;
+  height: 110px;
   z-index: 1;
   &:after {
     content: "";
@@ -129,6 +150,11 @@ export default {
     //filter: blur(6px);
     opacity: .5;
     border-radius: 50%;
+  }
+  &.router-link-active {
+    &:after {
+      background: #0026ff;
+    }
   }
 
 }

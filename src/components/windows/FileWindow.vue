@@ -22,7 +22,7 @@
           />
         </template>
         <div class="font-weight-semibold">
-          {{ title }} - {{ windowId }}
+          {{ title }} ID:  {{ windowId }}
         </div>
       </v-toolbar>
     </template>

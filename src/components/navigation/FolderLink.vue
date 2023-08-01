@@ -1,6 +1,6 @@
 <template>
   <router-link
-    :to="{ name: 'window', params: { id: window.id } }"
+    :to="{ name: routeName }"
     class="ma-2"
   >
     <div
@@ -28,9 +28,9 @@ export default {
       type: String,
       default: '',
     },
-    window: {
-      type: Object,
-      default: () => {},
+    routeName: {
+      type: String,
+      default: '',
     },
   },
   computed: {
@@ -46,8 +46,8 @@ export default {
   width: 100px;
   height: 115px;
   min-height: 115px;
-  min-width: 100px;
   max-height: 115px;
+  min-width: 100px;
   max-width: 100px;
   margin: auto auto 15px;
 }

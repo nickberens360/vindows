@@ -10,30 +10,27 @@
         disable-route-watcher
         elevation="0"
         :scrim="false"
-        width="500"
+        width="150"
         style="z-index: 10;"
         color="transparent"
       >
         <!--        <FolderLink
-          v-for="item in uiStore.windows"
-          :id="item.id"
-          :key="item.id"
-          :window="item"
-          :title="item.title"
-          class="ma-2"
-        />-->
+          route-name="projects"
+          title="Projects"
+          @click="uiStore.addToActiveWindows('projects')"
+        />
 
-        <!--        <FileTree-->
-        <!--          class="ml-16 mt-8"-->
-        <!--          open-in-new-window-->
-        <!--        />-->
-
-        <router-link
-          :to="{ name: 'about'}"
+        <FolderLink
+          route-name="about"
+          title="About"
           @click="uiStore.addToActiveWindows('about')"
-        >
-          About
-        </router-link>
+        />
+
+        <FolderLink
+          route-name="documents"
+          title="Documents"
+          @click="uiStore.addToActiveWindows('documents')"
+        />-->
       </v-navigation-drawer>
 
 
