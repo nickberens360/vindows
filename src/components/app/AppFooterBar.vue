@@ -17,19 +17,19 @@
       <!--        />-->
       <!--      </div>-->
     </div>
-    <div class="app-footer__minimized d-flex">
+    <!--    <div class="app-footer__minimized d-flex">
       <div
         v-for="window in uiStore.minimizedWindows"
         :key="window.id"
         class="app-footer__item"
         @click="handleMinimizedWindowClick(window)"
       >
-        <FileWindow
+        <ExplorerWindow
           :id="window.id"
           :window="window"
         />
       </div>
-    </div>
+    </div>-->
     <div class="edge">
         &nbsp;
     </div>
@@ -42,12 +42,12 @@
 <script>
 /* eslint-disable */
 import FolderLink from '@/components/navigation/FolderLink.vue';
-import FileWindow from '@/components/windows/FileWindow.vue';
+import ExplorerWindow from '@/components/windows/ExplorerWindow.vue';
 import { mapStores } from 'pinia';
 import { useUiStore } from '@/store/ui';
 export default {
   name: 'AppFooterBar',
-  components: { FolderLink, FileWindow },
+  components: { FolderLink, ExplorerWindow },
   computed: {
     ...mapStores(useUiStore),
   },

@@ -34,48 +34,51 @@
         >
           About
         </router-link>
-
-        <pre
-          v-for="(window) in uiStore.activeWindows"
-          :id="window.name"
-          :key="window.name"
-        >{{ window.uid }}</pre>
       </v-navigation-drawer>
 
 
       {{ $route.name }}
-      <!--      {{ $route.params.id[$route.params.id.length - 1] }}-->
-
-      <!--      <pre>{{ fileManagerStore.systemWindows.root.children.filter((item) => item.name === $route.params.id[$route.params.id.length - 1]) }}</pre>-->
 
 
-      <FileWindow
+      <div
         v-for="(window, index) in uiStore.activeWindows"
         :key="window.uid"
-        :window-id="window.windowId"
-        :window="window"
-        :content="window"
-        :initial-x="index * 50"
-        :initial-y="index * 50"
-      />
+      >
+        <ExplorerWindow
+          v-if="window.windowContentNode.type === 'folder'"
+          :window-id="window.windowId"
+          :window="window"
+          :content="window"
+          :initial-x="index * 50"
+          :initial-y="index * 50"
+        />
+        <FileWindow
+          v-else
+          :window-id="window.windowId"
+          :window="window"
+          :content="window"
+          :initial-x="index * 50"
+          :initial-y="index * 50"
+        />
+      </div>
     </div>
   </DesktopLayout>
 </template>
 
 <script>
 import FileTree from '@/components/navigation/FileTree.vue';
-import FolderContent from '@/components/windows/fileWindow/FolderContent.vue';
+import FileWindow from '@/components/windows/FileWindow.vue';
 import { mapStores } from 'pinia';
 import { useUiStore } from '@/store/ui';
 import { useFileManagerStore } from '@/store/fileManager';
 
 import FolderLink from '@/components/navigation/FolderLink.vue';
 import DesktopLayout from '@/components/layouts/DesktopLayout.vue';
-import FileWindow from '@/components/windows/FileWindow.vue';
+import ExplorerWindow from '@/components/windows/ExplorerWindow.vue';
 /* eslint-disable */
 export default {
   name: 'DesktopView',
-  components: { FolderContent, FileTree, FolderLink, FileWindow, DesktopLayout },
+  components: { FileWindow, FileTree, FolderLink, ExplorerWindow, DesktopLayout },
   data() {
     return {
       setItems: null,

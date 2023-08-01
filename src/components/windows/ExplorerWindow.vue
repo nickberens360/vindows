@@ -28,9 +28,42 @@
     </template>
 
     <div class="file-window__layout d-flex">
+      <div class="file-window__sidebar pa-4">
+        <router-link
+          v-for="item in topLevelFolders"
+          :key="item.name"
+          class="d-block"
+          style="cursor: pointer"
+          :to="{ name: item.name}"
+          @click="uiStore.updateWindowContentByNodeName(windowId, item.name)"
+        >
+          {{ item.name }}
+        </router-link>
+      </div>
       <div class="file-window__content pa-4">
         <slot name="content">
           {{ activeWindowContent }}
+          <div
+            v-for="item in content.windowContentNode.children"
+            :key="item.uid"
+          >
+            <router-link
+              v-if="item.type === 'folder'"
+              class="d-block"
+              :to="{ name: item.name}"
+              @click="uiStore.updateWindowContentByNodeName(windowId, item.name)"
+            >
+              {{ item.name }} - {{ item.type }}
+            </router-link>
+            <router-link
+              v-if="item.type === 'file'"
+              class="d-block"
+              :to="{ name: item.name}"
+              @click.stop="uiStore.addToActiveWindows(item.name)"
+            >
+              {{ item.name }} - {{ item.type }}
+            </router-link>
+          </div>
         </slot>
       </div>
     </div>
@@ -49,7 +82,7 @@ import { useFileManagerStore } from '@/store/fileManager';
 
 
 export default {
-  name: 'FileWindow',
+  name: 'ExplorerWindow',
   components: { SubContentView, ContentView, AppDragBox },
   props: {
     windowId: {
@@ -172,7 +205,6 @@ export default {
   min-width: 0; // Don't use more space than available
   height: 100%;
   overflow: auto;
-  background: white;
 }
 
 :deep(.drag-box__handle) {
