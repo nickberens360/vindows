@@ -23,10 +23,10 @@
           class="ma-2"
         />-->
 
-        <FileTree
-          class="ml-16 mt-8"
-          open-in-new-window
-        />
+        <!--        <FileTree-->
+        <!--          class="ml-16 mt-8"-->
+        <!--          open-in-new-window-->
+        <!--        />-->
         <pre>{{ uiStore.activeWindows }}</pre>
       </v-navigation-drawer>
 
@@ -49,10 +49,6 @@
         <template #sidebar>
           <FileTree />
         </template>
-        <!--        <template #content>-->
-        <!--          <FolderContent />-->
-        <!--          <pre>{{ folderContent }}</pre>-->
-        <!--        </template>-->
       </FileWindow>
     </div>
   </DesktopLayout>
@@ -94,11 +90,7 @@ export default {
   },
   methods: {
     initStoreData() {
-      console.log('initStoreData');
-      // const window = this.uiStore.windows.filter(item =>
-      //   item.id === this.$route.params.id
-      // );
-      // this.uiStore.addActiveWindow(...window);
+      this.uiStore.setActiveWindows(this.$route.name);
     },
   },
 

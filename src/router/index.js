@@ -57,7 +57,6 @@ function generateRoutesFromFileSystem(fileSystemData, currentPath = '') {
   const routes = [];
 
   for (const item of fileSystemData.children) {
-
     const itemPath = currentPath === '' ? `/${item.name}` : `${currentPath}/${item.name}`;
     let component = null;
     if (item.type === 'folder' && item.depth === 1) {
@@ -65,7 +64,6 @@ function generateRoutesFromFileSystem(fileSystemData, currentPath = '') {
     } else if (item.type === 'folder' && item.depth > 1) {
       component = () => import('@/views/content/SubContentView.vue');
     } else if (item.type === 'file') {
-      console.log('item', item.type, item.name);
       component = () => import('@/views/content/FileView.vue');
     }
 
@@ -73,21 +71,20 @@ function generateRoutesFromFileSystem(fileSystemData, currentPath = '') {
       path: `/explorer${itemPath}`,
       name: `${item.name}`,
       component: component,
-      children: [], // Add an empty children array for nested routes
     };
 
-    // Add route to routes array
     routes.push(route);
 
     if (item.type === 'folder' && item.children && item.children.length > 0) {
       // Recursively generate routes for nested folders and files
-      const nestedRoutes = generateRoutesFromFileSystem(item, itemPath);
-      route.children.push(...nestedRoutes); // Add nested routes to the children array
+      const nestedRoutes = generateRoutesFromFileSystem(item, currentPath);
+      routes.push(...nestedRoutes); // Add nested routes to the routes array
     }
   }
 
   return routes;
 }
+
 
 
 

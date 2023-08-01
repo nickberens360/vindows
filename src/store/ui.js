@@ -1,68 +1,43 @@
-import { defineStore } from 'pinia';
 import fileSystem from '@/data/fileSystem';
 import { findSystemNodeByName } from '@/utilities/systemUtils';
+import { defineStore } from 'pinia';
 
 
 export const useUiStore = defineStore('ui', {
   state: () => {
     return {
-      systemWindows: JSON.parse(JSON.stringify(fileSystem)),
-      windows: [
-        {
-          id: 'about',
-          title: 'About',
-          windowType: 'FileWindow',
-          content: 'AboutView',
-        },
-        {
-          id: 'projects',
-          title: 'Projects',
-          windowType: 'FileWindow',
-          content: 'ProjectsView',
-        },
-
-        // {
-        //   id: 'testTwo',
-        //   title: 'Test Two',
-        // },
-        // {
-        //   id: 'testThree',
-        //   title: 'Test Three',
-        // }
-      ],
+      systemDataNodes: JSON.parse(JSON.stringify(fileSystem)),
       activeWindow: {},
       activeWindowContent: {},
-      activeWindows: [{
-        windowId: undefined,
-        activeSystemDataNode: undefined,
-        isActive: false,
-      }],
+      activeWindows: [],
+      activeWindowId: null,
       minimizedWindows: [],
     };
   },
   actions: {
-    findItemByName(name) {
-      return findSystemNodeByName(name, this.systemWindows.root);
+    findNodeByName(name) {
+      return findSystemNodeByName(name, this.systemDataNodes.root);
     },
 
-    setActiveWindows(windowId, activeSystemDataNode) {
-      const existingWindowIndex = this.activeWindows.findIndex(
-        (window) => window.windowId === windowId
-      );
-
-      if (existingWindowIndex !== -1) {
-        // Window already exists, update its properties
-        this.activeWindows[existingWindowIndex].activeSystemDataNode = activeSystemDataNode;
-        this.activeWindows[existingWindowIndex].isActive = true;
-      } else {
-        // Window does not exist, add a new window to the array
-        this.activeWindows.push({
-          windowId,
-          activeSystemDataNode,
-          isActive: true,
-        });
-      }
+    setActiveWindows(systemDataNodeName) {
+      const node = this.findNodeByName(systemDataNodeName);
+      this.setActiveWindowId(node.uid);
+      this.activeWindows.push({
+        windowId: node.uid,
+        windowContentNode: node,
+        isActive: true,
+      });
     },
+
+    updateWindowContentByNodeName(windowId, name) {
+      const window = this.activeWindows.find(window => window.windowId === windowId);
+      window.windowContentNode = this.findNodeByName(name);
+    },
+
+    setActiveWindowId(windowId) {
+      this.activeWindowId = windowId;
+    },
+
 
     setActiveWindow(window) {
       this.activeWindow = window;
