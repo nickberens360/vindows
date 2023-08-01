@@ -50,7 +50,7 @@
             :to="{ name: item.name}"
             @click="uiStore.updateWindowContentByNodeName(windowId, item.name)"
           >
-            {{ item.name }}
+            {{ item.name }} - {{ item.type }}
           </router-link>
         </slot>
       </div>
@@ -73,11 +73,6 @@ export default {
   name: 'FileWindow',
   components: { SubContentView, ContentView, AppDragBox },
   props: {
-    // id: {
-    //   type: String,
-    //   required: true,
-    //   default: 'fileWindow',
-    // },
     windowId: {
       type: [String, Number],
       required: true,
