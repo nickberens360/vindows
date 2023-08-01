@@ -22,14 +22,13 @@
           />
         </template>
         <div class="font-weight-semibold">
-          {{ title }}
+          {{ title }} - {{ windowId }}
         </div>
       </v-toolbar>
     </template>
 
     <div class="file-window__layout d-flex">
       <div class="file-window__sidebar pa-4">
-        {{ windowId }}
         <router-link
           v-for="item in topLevelFolders"
           :key="item.name"
@@ -43,17 +42,16 @@
       </div>
       <div class="file-window__content pa-4">
         <slot name="content">
-          {{ uiStore.activeWindow.windowId === windowId }}
-
-          <p
+          {{ activeWindowContent }}
+          <router-link
             v-for="item in content.windowContentNode.children"
             :key="item.uid"
             class="d-block"
-            style="cursor: pointer"
+            :to="{ name: item.name}"
             @click="uiStore.updateWindowContentByNodeName(windowId, item.name)"
           >
             {{ item.name }}
-          </p>
+          </router-link>
         </slot>
       </div>
     </div>
@@ -85,10 +83,6 @@ export default {
       required: true,
       default: 'window-1',
     },
-    activeSystemDataNode: {
-      type: [Object, Array],
-      default: () => {},
-    },
     window: {
       type: Object,
       default: () => {},
@@ -106,7 +100,7 @@ export default {
     return {
       isMinimizing: false,
       tab: this.id,
-      contentPane: {},
+      activeContentNode: {},
     };
   },
   computed: {
@@ -115,7 +109,10 @@ export default {
       return this.fileManagerStore.systemWindows.root.children.filter((item) => item.type === 'folder');
     },
     isActive() {
-      return this.uiStore.activeWindow.uid === this.windowId;
+      return this.uiStore.activeWindow.windowId === this.windowId;
+    },
+    activeWindowContent() {
+      return this.window.windowContentNode.name;
     },
     updateZIndex() {
       if (this.isActive) {
@@ -134,20 +131,9 @@ export default {
     // },
   },
   methods: {
-    handleActiveWindowContent(node) {
-      if (this.contentPane) {
-        return this.contentPane;
-      } else {
-        return node;
-      }
-    },
-    handleFolderClicked(item) {
-      console.log('handleFolderClicked', item);
-      this.contentPane = item;
-    },
     async handleClick() {
       await this.uiStore.setActiveWindow(this.window);
-      // this.$router.push({ name: 'explorer', params: { id: this.uiStore.activeWindow.name } });
+      this.$router.push({ name: this.activeWindowContent });
     },
     handleClose() {
       this.uiStore.removeActiveWindow(this.window);

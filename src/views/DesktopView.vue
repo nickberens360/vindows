@@ -48,17 +48,16 @@
 
       <!--      <pre>{{ fileManagerStore.systemWindows.root.children.filter((item) => item.name === $route.params.id[$route.params.id.length - 1]) }}</pre>-->
 
-      <div v-if="uiStore.activeWindows.length">
-        <FileWindow
-          v-for="(window, index) in uiStore.activeWindows"
-          :key="window.uid"
-          :window-id="window.windowId"
-          :window="window"
-          :content="window"
-          :initial-x="index * 50"
-          :initial-y="index * 50"
-        />
-      </div>
+
+      <FileWindow
+        v-for="(window, index) in uiStore.activeWindows"
+        :key="window.uid"
+        :window-id="window.windowId"
+        :window="window"
+        :content="window"
+        :initial-x="index * 50"
+        :initial-y="index * 50"
+      />
     </div>
   </DesktopLayout>
 </template>
