@@ -27,7 +27,19 @@
         <!--          class="ml-16 mt-8"-->
         <!--          open-in-new-window-->
         <!--        />-->
-        <pre>{{ uiStore.activeWindows }}</pre>
+
+        <router-link
+          :to="{ name: 'about'}"
+          @click="uiStore.addToActiveWindows('about')"
+        >
+          About
+        </router-link>
+
+        <pre
+          v-for="(window) in uiStore.activeWindows"
+          :id="window.name"
+          :key="window.name"
+        >{{ window.uid }}</pre>
       </v-navigation-drawer>
 
 
@@ -36,20 +48,17 @@
 
       <!--      <pre>{{ fileManagerStore.systemWindows.root.children.filter((item) => item.name === $route.params.id[$route.params.id.length - 1]) }}</pre>-->
 
-      <FileWindow
-        v-for="(window, index) in uiStore.activeWindows"
-        :id="window.name"
-        :key="window.name"
-        :window-id="`window-${index}`"
-        :window="window"
-        :content="window"
-        :initial-x="index * 50"
-        :initial-y="index * 50"
-      >
-        <template #sidebar>
-          <FileTree />
-        </template>
-      </FileWindow>
+      <div v-if="uiStore.activeWindows.length">
+        <FileWindow
+          v-for="(window, index) in uiStore.activeWindows"
+          :key="window.uid"
+          :window-id="window.windowId"
+          :window="window"
+          :content="window"
+          :initial-x="index * 50"
+          :initial-y="index * 50"
+        />
+      </div>
     </div>
   </DesktopLayout>
 </template>
@@ -78,11 +87,11 @@ export default {
   computed: {
     ...mapStores(useUiStore, useFileManagerStore),
   },
-  watch: {
-    '$route'() {
-      this.initStoreData();
-    }
-  },
+  // watch: {
+  //   '$route'() {
+  //     this.initStoreData();
+  //   }
+  // },
   mounted() {
     if (this.$route.name !== 'desktop') {
       this.initStoreData();
@@ -90,7 +99,7 @@ export default {
   },
   methods: {
     initStoreData() {
-      this.uiStore.setActiveWindows(this.$route.name);
+      this.uiStore.addToActiveWindows(this.$route.name);
     },
   },
 

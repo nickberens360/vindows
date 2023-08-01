@@ -1,6 +1,6 @@
 <template>
   <AppDragBox
-    :id="id"
+    :id="windowId"
     class="file-window"
     :class="{active: isActive, minimizing: isMinimizing}"
     @drag-box-clicked="handleClick"
@@ -29,56 +29,34 @@
 
     <div class="file-window__layout d-flex">
       <div class="file-window__sidebar pa-4">
-        <v-tabs
-          v-model="tab"
-          direction="vertical"
-          color="primary"
+        {{ windowId }}
+        <router-link
+          v-for="item in topLevelFolders"
+          :key="item.name"
+          class="d-block"
+          style="cursor: pointer"
+          :to="{ name: item.name}"
+          @click="uiStore.updateWindowContentByNodeName(windowId, item.name)"
         >
-          <v-tab
-            v-for="item in topLevelFolders"
-            :key="item.name"
-            :value="item.name"
-            :to="{ name: item.name }"
-            :disabled="!isActive"
-            @click="contentPane = null"
-          >
-            {{ item.name }}
-          </v-tab>
-        </v-tabs>
+          {{ item.name }}
+        </router-link>
       </div>
       <div class="file-window__content pa-4">
         <slot name="content">
-          <v-window
-            v-model="tab"
-            disabled
+          {{ uiStore.activeWindow.windowId === windowId }}
+
+          <p
+            v-for="item in content.windowContentNode.children"
+            :key="item.uid"
+            class="d-block"
+            style="cursor: pointer"
+            @click="uiStore.updateWindowContentByNodeName(windowId, item.name)"
           >
-            <v-window-item
-              v-for="item in topLevelFolders"
-              :key="item.name"
-              :value="item.name"
-            >
-              <pre v-if="contentPane">{{ contentPane }}</pre>
-              <ContentView
-                v-else
-                :content="contentPane ? item : {}"
-                :is-active="isActive"
-                @folder-clicked="handleFolderClicked($event)"
-              />
-
-              <!--              <pre>{{ contentPane }}</pre>-->
-            </v-window-item>
-          </v-window>
-
-
-          <!--          <ContentView :content="computedContent" />-->
-          <!--          <pre>{{ computedContent }}</pre>-->
-          <!--          <component :is="content" />-->
+            {{ item.name }}
+          </p>
         </slot>
       </div>
     </div>
-    <!--    <template #footer>-->
-    <!--      resize handle here-->
-    <!--    </template>-->
   </AppDragBox>
 </template>
 
@@ -97,13 +75,13 @@ export default {
   name: 'FileWindow',
   components: { SubContentView, ContentView, AppDragBox },
   props: {
-    id: {
-      type: String,
-      required: true,
-      default: 'fileWindow',
-    },
+    // id: {
+    //   type: String,
+    //   required: true,
+    //   default: 'fileWindow',
+    // },
     windowId: {
-      type: String,
+      type: [String, Number],
       required: true,
       default: 'window-1',
     },
@@ -137,7 +115,7 @@ export default {
       return this.fileManagerStore.systemWindows.root.children.filter((item) => item.type === 'folder');
     },
     isActive() {
-      return this.uiStore.activeWindow.name === this.id;
+      return this.uiStore.activeWindow.uid === this.windowId;
     },
     updateZIndex() {
       if (this.isActive) {

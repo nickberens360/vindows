@@ -77,7 +77,7 @@ const fileSystem = {
 
 // Function to add UID to file system nodes
 function addUIDs(node, counter) {
-  node.uid = counter; // Assign the current counter value as the UID
+  node.uid = `window-${counter}`; // Assign the current counter value as the UID with 'window-' prefix
 
   // Increment the counter for the next node
   counter++;
@@ -91,6 +91,7 @@ function addUIDs(node, counter) {
 
   return counter; // Return the updated counter value
 }
+
 
 // Call the function to add UIDs starting from 1 (you can change the starting value as needed)
 addUIDs(fileSystem.root, 1);
