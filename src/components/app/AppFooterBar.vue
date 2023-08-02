@@ -202,6 +202,9 @@ export default {
   .content-panel {
     pointer-events: none !important;
   }
+  .v-toolbar__append {
+    display: none !important;
+  }
 }
 :deep(.drag-box) {
   position: relative !important;
