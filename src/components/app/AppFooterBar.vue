@@ -201,6 +201,7 @@ export default {
   }
   .content-panel {
     pointer-events: none !important;
+    padding: 0 !important;
   }
   .v-toolbar__append {
     display: none !important;
