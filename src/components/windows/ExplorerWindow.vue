@@ -80,7 +80,6 @@ import FilePanel from '@/components/windows/windowParts/FilePanel.vue';
 import SubContentView from '@/views/content/SubContentView.vue';
 import { mapStores } from 'pinia';
 import { useUiStore } from '@/store/ui';
-import { useFileManagerStore } from '@/store/fileManager';
 
 
 
@@ -110,9 +109,9 @@ export default {
     };
   },
   computed: {
-    ...mapStores(useUiStore, useFileManagerStore),
+    ...mapStores(useUiStore),
     topLevelFolders() {
-      return this.fileManagerStore.systemWindows.root.children.filter((item) => item.type === 'folder');
+      return this.uiStore.systemDataNodes.root.children.filter((item) => item.type === 'folder');
     },
     isActive() {
       return this.uiStore.activeWindow.windowId === this.windowId;

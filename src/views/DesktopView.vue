@@ -50,11 +50,9 @@
 </template>
 
 <script>
-import FileTree from '@/components/navigation/FileTree.vue';
-import FileWindow from '@/components/windows/FileWindow.vue';
+
 import { mapStores } from 'pinia';
 import { useUiStore } from '@/store/ui';
-import { useFileManagerStore } from '@/store/fileManager';
 
 import FolderLink from '@/components/navigation/FolderLink.vue';
 import DesktopLayout from '@/components/layouts/DesktopLayout.vue';
@@ -62,7 +60,7 @@ import ExplorerWindow from '@/components/windows/ExplorerWindow.vue';
 /* eslint-disable */
 export default {
   name: 'DesktopView',
-  components: { FileWindow, FileTree, FolderLink, ExplorerWindow, DesktopLayout },
+  components: {  FolderLink, ExplorerWindow, DesktopLayout },
   data() {
     return {
       setItems: null,
@@ -71,7 +69,7 @@ export default {
     };
   },
   computed: {
-    ...mapStores(useUiStore, useFileManagerStore),
+    ...mapStores(useUiStore),
   },
   mounted() {
     if (this.$route.name !== 'desktop') {
