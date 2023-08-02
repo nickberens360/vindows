@@ -5,52 +5,34 @@
     height="55"
   >
     <div
-      class="app-footer__container d-flex align-center justify-space-between"
+      class="app-footer__container d-flex align-center justify-center justify-space-between"
     >
       <router-link
-        :to="{name: 'projects'}"
-        class="app-footer__item"
-      >
-        <FolderLink
-          route-name="projects"
-          title="Projects"
-          @click="uiStore.addToActiveWindows('projects')"
-        />
-      </router-link>
-      <router-link
         :to="{name: 'about'}"
-        class="app-footer__item"
+        class="app-footer__item d-flex align-center justify-center"
       >
-        <FolderLink
-          route-name="about"
-          title="About"
-          @click="uiStore.addToActiveWindows('about')"
-        />
-      </router-link>
-      <router-link
-        :to="{name: 'documents'}"
-        class="app-footer__item"
-      >
-        <FolderLink
-          route-name="documents"
-          title="Documents"
-          @click="uiStore.addToActiveWindows('documents')"
-        />
+        <img
+          src="https://i.imgur.com/ErWuQ2t.gif"
+          alt="Projects"
+          style="width: 80px; top: 15px; position: relative; border-radius: 50%;"
+          class="elevation-4"
+          @click="uiStore.addToActiveWindows('projects')"
+        >
       </router-link>
     </div>
-    <!--    <div class="app-footer__minimized d-flex">
+    <div class="app-footer__minimized d-flex">
       <div
         v-for="window in uiStore.minimizedWindows"
         :key="window.id"
         class="app-footer__item"
-        @click="handleMinimizedWindowClick(window)"
+        @click="uiStore.removeMinimizedWindow(window)"
       >
         <ExplorerWindow
-          :id="window.id"
+          :window-id="window.windowId"
           :window="window"
         />
       </div>
-    </div>-->
+    </div>
     <div class="edge">
         &nbsp;
     </div>
@@ -217,6 +199,9 @@ export default {
   .file-window__sidebar {
     display: none !important;
   }
+  .content-panel {
+    pointer-events: none !important;
+  }
 }
 :deep(.drag-box) {
   position: relative !important;
@@ -226,5 +211,8 @@ export default {
   width: 100% !important;
   height: 100% !important;
   transform: scale(.8) !important;
+  .drag-box__handle {
+    pointer-events: none !important;
+  }
 }
 </style>

@@ -130,6 +130,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 .file-window {
   position: relative;
   :deep(.drag-box) {
@@ -163,8 +164,8 @@ export default {
 }
 
 .file-window__content {
-  flex-grow: 1; // Fill remaining space
-  min-width: 0; // Don't use more space than available
+  flex-grow: 1;
+  min-width: 0;
   height: 100%;
   overflow: scroll;
 }

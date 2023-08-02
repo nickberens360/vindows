@@ -50,12 +50,24 @@ export default {
 };
 </script>
 
+<style>
+:root {
+  --folder-border-radius: 4px;
+  --folder-width: 45px;
+  --folder-height: 40px;
+  --folder-border-width: 1px;
+  --folder-tab-width: 18px;
+  --folder-tab-height: 3px;
+  --folder-tab-height-offset: calc(-1 * var(--folder-tab-height));
+}
+</style>
+
 <style scoped lang="scss">
 
 .folder-icon {
   position: relative;
-  width: 45px;
-  height: 40px;
+  width: var(--folder-width);
+  height: var(--folder-height);
   margin: auto;
 }
 
@@ -63,20 +75,20 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 0 5px 5px 5px;
-  border: 1px solid black;
-  background: #f6d898;
+  border-radius: 0 var(--folder-border-radius) var(--folder-border-radius) var(--folder-border-radius);
+  border: var(--folder-border-width) solid black;
+  background: #fae2b6;
 }
 
 .folder-icon__back:after {
   content: '';
   position: absolute;
-  border-radius: 4px 8px 0 0;
+  border-radius: var(--folder-border-radius) var(--folder-border-radius) 0 0;
+  top: var(--folder-tab-height-offset);
   left: -1px;
-  width: 18px;
-  top: -3px;
-  height: 3px;
-  border: 1px solid black;
+  width: var(--folder-tab-width);
+  height: var(--folder-tab-height);
+  border: var(--folder-border-width) solid black;
   border-bottom: none;
   background: #f6d898;
 }
@@ -86,7 +98,7 @@ export default {
   left: 0;
   width: 100%;
   height: 35px;
-  border: 1px solid black;
+  border: var(--folder-border-width) solid black;
   background: #ffd57c;
   transform: skewX(-10deg);
   transform-origin: bottom;

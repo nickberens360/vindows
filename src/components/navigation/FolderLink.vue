@@ -41,21 +41,10 @@ export default {
 
 <style scoped>
 
-.desktop-item {
-  border-radius: 10px;
-  width: 100px;
-  height: 115px;
-  min-height: 115px;
-  max-height: 115px;
-  min-width: 100px;
-  max-width: 100px;
-  margin: auto auto 15px;
-}
-
 .folder-icon {
   position: relative;
   width: 80px;
-  height: 90px;
+  height: 75px;
   margin: auto;
 }
 
@@ -63,47 +52,34 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 10px;
+  border-radius: 0 10px 10px 10px;
   border: 2px solid black;
-  background: #f6d898;
+  background: #fae2b6;
 }
 
 .folder-icon__back:after {
   content: '';
   position: absolute;
-  top: -4px;
-  border-radius: 8px 8px 0 0;
-  left: 10px;
-  width: 24px;
+  top: -5px;
+  border-radius: 6px 8px 0 0;
+  left: -2px;
+  width: 34px;
   height: 5px;
   border: 2px solid black;
   border-bottom: none;
   background: #f6d898;
-  transform: skew(-27deg);
+  //transform: skew(-27deg);
 }
 
-.folder-icon__back:before {
-  content: '';
-  position: absolute;
-  top: -4px;
-  border-radius: 8px 8px 0 0;
-  left: 10px;
-  width: 24px;
-  height: 5px;
-  border: 2px solid black;
-  border-bottom: none;
-  background: #f6d898;
-  transform: skew(27deg);
-}
 .folder-icon__front {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 80px;
+  height: 65px;
   border: 2px solid black;
   background: #ffd57c;
-  transform: skewX(5deg);
+  transform: skewX(-5deg);
   transform-origin: bottom;
   border-radius: 10px;
   transition: all 0.25s ease;
@@ -114,9 +90,9 @@ export default {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 70px;
+  height: 62px;
   border: 2px solid black;
-  transform: skewX(15deg);
+  transform: skewX(-15deg);
   transform-origin: bottom;
   border-radius: 10px;
 }

@@ -10,11 +10,11 @@
         disable-route-watcher
         elevation="0"
         :scrim="false"
-        width="350"
+        width="150"
         style="z-index: 10;"
         color="transparent"
       >
-        <!--        <FolderLink
+        <FolderLink
           route-name="projects"
           title="Projects"
           @click="uiStore.addToActiveWindows('projects')"
@@ -30,14 +30,7 @@
           route-name="documents"
           title="Documents"
           @click="uiStore.addToActiveWindows('documents')"
-        />-->
-
-        <pre
-          v-for="window in uiStore.activeWindows"
-          :key="window.windowId"
-        >
-          {{ window.windowId }}
-        </pre>
+        />
       </v-navigation-drawer>
 
 
@@ -80,11 +73,6 @@ export default {
   computed: {
     ...mapStores(useUiStore, useFileManagerStore),
   },
-  // watch: {
-  //   '$route'() {
-  //     this.initStoreData();
-  //   }
-  // },
   mounted() {
     if (this.$route.name !== 'desktop') {
       this.initStoreData();

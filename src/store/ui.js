@@ -23,7 +23,7 @@ export const useUiStore = defineStore('ui', {
         windowId: node.uid,
         windowContentNode: node,
       };
-      this.setActiveWindow(this.activeWindow);
+      this.setActiveWindow(this.activeWindow, this.activeWindow.windowContentNode.name);
       if (this.activeWindows.find(window => window.windowId === node.uid)) return;
       this.activeWindows.push({
         windowId: node.uid,
@@ -45,6 +45,8 @@ export const useUiStore = defineStore('ui', {
         this.activeWindows.push(window);
       }
     },
+
+
     removeActiveWindow(window) {
       let index = this.activeWindows.indexOf(window);
       this.activeWindows.splice(index, 1);
@@ -56,7 +58,8 @@ export const useUiStore = defineStore('ui', {
     removeMinimizedWindow(window) {
       let index = this.minimizedWindows.indexOf(window);
       this.minimizedWindows.splice(index, 1);
+      this.addToActiveWindows(window.windowContentNode.name);
     }
   },
-  persist: true,
+  // persist: true,
 });

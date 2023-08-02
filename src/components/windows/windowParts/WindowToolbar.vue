@@ -16,7 +16,7 @@
       />
     </template>
     <div class="font-weight-semibold">
-      {{ window.windowContentNode.name }} - {{ windowType }}
+      {{ window.windowContentNode.name }}
     </div>
   </v-toolbar>
 </template>
