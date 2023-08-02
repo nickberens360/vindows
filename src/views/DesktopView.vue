@@ -10,7 +10,7 @@
         disable-route-watcher
         elevation="0"
         :scrim="false"
-        width="150"
+        width="350"
         style="z-index: 10;"
         color="transparent"
       >
@@ -31,6 +31,13 @@
           title="Documents"
           @click="uiStore.addToActiveWindows('documents')"
         />-->
+
+        <pre
+          v-for="window in uiStore.activeWindows"
+          :key="window.windowId"
+        >
+          {{ window.windowId }}
+        </pre>
       </v-navigation-drawer>
 
 
@@ -39,18 +46,10 @@
 
       <div
         v-for="(window, index) in uiStore.activeWindows"
-        :key="window.uid"
+        :key="window.windowId"
       >
+        <!--          v-if="window.windowContentNode.type === 'folder'"-->
         <ExplorerWindow
-          v-if="window.windowContentNode.type === 'folder'"
-          :window-id="window.windowId"
-          :window="window"
-          :content="window"
-          :initial-x="index * 50"
-          :initial-y="index * 50"
-        />
-        <FileWindow
-          v-else
           :window-id="window.windowId"
           :window="window"
           :content="window"

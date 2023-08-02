@@ -3,32 +3,22 @@
     :id="windowId"
     class="file-window"
     :class="{active: isActive, minimizing: isMinimizing}"
-    @drag-box-clicked="handleClick"
+    @click.capture="handleClick"
+    @drag-box-mousedown="handleClick"
   >
     <template #drag-area>
-      <v-toolbar
-        height="40"
-        color="#f1ebde"
-        class=" file-window__header d-flex align-center justify-space-between pl-2"
-      >
-        <template #append>
-          <v-icon
-            icon="fal fa-minus-square"
-            @click="handleMinimize"
-          />
-          <v-icon
-            icon="far fa-times"
-            @click="handleClose"
-          />
-        </template>
-        <div class="font-weight-semibold">
-          {{ title }} - {{ windowId }}
-        </div>
-      </v-toolbar>
+      <WindowToolbar
+        :window-id="windowId"
+        :window="window"
+        :window-type="window.windowContentNode.type"
+      />
     </template>
 
     <div class="file-window__layout d-flex">
-      <div class="file-window__sidebar pa-4">
+      <div
+        v-if="window.windowContentNode.type === 'folder'"
+        class="file-window__sidebar pa-4"
+      >
         <router-link
           v-for="item in topLevelFolders"
           :key="item.name"
@@ -40,14 +30,25 @@
           {{ item.name }}
         </router-link>
       </div>
-      <div class="file-window__content pa-4">
+      <div class="file-window__content">
         <slot name="content">
-          {{ activeWindowContent }}
-          <div
+          <ExplorerPanel
+            v-if="window.windowContentNode.type === 'folder'"
+            :content="window.windowContentNode"
+            :window-id="windowId"
+          />
+          <FilePanel
+            v-if="window.windowContentNode.type === 'file'"
+            :content="window.windowContentNode"
+            :window-id="windowId"
+          />
+
+
+          <!--          <div
             v-for="item in content.windowContentNode.children"
             :key="item.uid"
           >
-            <router-link
+                        <router-link
               v-if="item.type === 'folder'"
               class="d-block"
               :to="{ name: item.name}"
@@ -63,7 +64,7 @@
             >
               {{ item.name }} - {{ item.type }}
             </router-link>
-          </div>
+          </div>-->
         </slot>
       </div>
     </div>
@@ -73,7 +74,9 @@
 <script>
 /*eslint-disable*/
 import AppDragBox from '@/components/app/AppDragBox.vue';
-import ContentView from '@/views/content/ContentView.vue';
+import ExplorerPanel from '@/components/windows/windowParts/ExplorerPanel.vue';
+import WindowToolbar from '@/components/windows/windowParts/WindowToolbar.vue';
+import FilePanel from '@/components/windows/windowParts/FilePanel.vue';
 import SubContentView from '@/views/content/SubContentView.vue';
 import { mapStores } from 'pinia';
 import { useUiStore } from '@/store/ui';
@@ -83,7 +86,7 @@ import { useFileManagerStore } from '@/store/fileManager';
 
 export default {
   name: 'ExplorerWindow',
-  components: { SubContentView, ContentView, AppDragBox },
+  components: { WindowToolbar, FilePanel, ExplorerPanel, SubContentView, AppDragBox },
   props: {
     windowId: {
       type: [String, Number],
@@ -121,28 +124,13 @@ export default {
     activeWindowContent() {
       return this.window.windowContentNode.name;
     },
-    updateZIndex() {
-      if (this.isActive) {
-        return 100;
-      } else {
-        return 'unset';
-      }
-    },
-
-    // computedContent() {
-    //   if (this.isActive) {
-    //     return this.uiStore.activeWindowContent;
-    //   } else {
-    //     return this.content;
-    //   }
-    // },
   },
   methods: {
     async handleClick() {
       await this.uiStore.setActiveWindow(this.window);
       this.$router.push({ name: this.activeWindowContent });
     },
-    handleClose() {
+    /*handleClose() {
       this.uiStore.removeActiveWindow(this.window);
       if (this.uiStore.activeWindows.length === 0) {
         this.$router.push({ name: 'desktop'});
@@ -159,7 +147,7 @@ export default {
       //   this.handleClose();
       //   this.isMinimizing = false;
       // }, 1000);
-    },
+    },*/
   },
 };
 </script>
@@ -183,10 +171,7 @@ export default {
     }
   }
 }
-.file-window__header {
-  cursor: move;
-  border-bottom: 2px solid #000;
-}
+
 
 .file-window__layout {
   height: calc(100% - 40px);
@@ -204,7 +189,7 @@ export default {
   flex-grow: 1; // Fill remaining space
   min-width: 0; // Don't use more space than available
   height: 100%;
-  overflow: auto;
+  overflow: scroll;
 }
 
 :deep(.drag-box__handle) {

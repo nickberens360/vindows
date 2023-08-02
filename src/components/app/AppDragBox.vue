@@ -6,14 +6,15 @@
       :id="id"
       :ref="id"
       class="drag-box"
-      @click="handleClick()"
     >
+      <!--      @click="handleClick()"-->
       <div
         :id="`handle-${id}`"
         :ref="`handle-${id}`"
         class="drag-box__handle"
-        v-on="{ mousedown: handleMouseDown }"
+        @mousedown="handleMouseDown"
       >
+        <!--        v-on="{ mousedown: handleMouseDown }"-->
         <slot name="drag-area" />
       </div>
       <slot name="default" />
@@ -73,7 +74,7 @@ export default {
     },
     handleMouseDown(event) {
       event.preventDefault();
-      this.$emit('drag-box-clicked');
+      this.$emit('drag-box-mousedown');
       const {clientX, clientY} = event;
       let currentX = clientX;
       let currentY = clientY;

@@ -40,12 +40,16 @@ export const useUiStore = defineStore('ui', {
 
     setActiveWindow(window) {
       this.activeWindow = window;
-      // const index = this.activeWindows.indexOf(window);
-      // if (index !== -1) {
-      //   this.activeWindows.splice(index, 1);
-      //   this.activeWindows.push(window);
-      // }
+
+      const index = this.activeWindows.findIndex((item) => item.windowId === window.windowId);
+      console.log(index);
+
+      if (index !== -1) {
+        this.activeWindows.splice(index, 1);
+        this.activeWindows.push(window);
+      }
     },
+
     async addActiveWindow(window, openInNewWindow = false) {
       // if (this.activeWindow === window) return;
       if (!openInNewWindow) return;
