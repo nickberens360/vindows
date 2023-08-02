@@ -141,7 +141,7 @@ export default {
     position: absolute;
     z-index: -1;
     bottom: -20px;
-    width: 20%;
+    width: 15%;
     height: 4px;
     left: 50%;
     right: 50%;
@@ -153,7 +153,7 @@ export default {
   }
   &.router-link-active {
     &:after {
-      background: #0026ff;
+      background: red;
     }
   }
 

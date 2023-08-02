@@ -17,14 +17,13 @@ export const useUiStore = defineStore('ui', {
     findNodeByName(name) {
       return findSystemNodeByName(name, this.systemDataNodes.root);
     },
-
     addToActiveWindows(systemDataNodeName) {
       const node = this.findNodeByName(systemDataNodeName);
       this.activeWindow = {
         windowId: node.uid,
         windowContentNode: node,
       };
-      // check active windows for this window by windowId
+      this.setActiveWindow(this.activeWindow);
       if (this.activeWindows.find(window => window.windowId === node.uid)) return;
       this.activeWindows.push({
         windowId: node.uid,
@@ -37,30 +36,14 @@ export const useUiStore = defineStore('ui', {
       window.windowContentNode = this.findNodeByName(name);
     },
 
-
-    setActiveWindow(window) {
+    setActiveWindow(window, routeName) {
       this.activeWindow = window;
-
+      this.$router.push({ name: routeName});
       const index = this.activeWindows.findIndex((item) => item.windowId === window.windowId);
-      console.log(index);
-
       if (index !== -1) {
         this.activeWindows.splice(index, 1);
         this.activeWindows.push(window);
       }
-    },
-
-    async addActiveWindow(window, openInNewWindow = false) {
-      // if (this.activeWindow === window) return;
-      if (!openInNewWindow) return;
-      this.setActiveWindow(window);
-      if (this.activeWindows.includes(window)) return;
-      await this.activeWindows.push(window);
-      // if (this.activeWindows.includes(window)) return;
-      // this.activeWindows.push(window);
-      // if (this.minimizedWindows.includes(window)) {
-      //   this.removeMinimizedWindow(window);
-      // }
     },
     removeActiveWindow(window) {
       let index = this.activeWindows.indexOf(window);
@@ -75,5 +58,5 @@ export const useUiStore = defineStore('ui', {
       this.minimizedWindows.splice(index, 1);
     }
   },
-
+  persist: true,
 });

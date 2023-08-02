@@ -101,10 +101,6 @@ export default {
       type: String,
       default: 'Explorer',
     },
-    content: {
-      type: Object,
-      default: () => {},
-    },
   },
   data() {
     return {
@@ -121,33 +117,14 @@ export default {
     isActive() {
       return this.uiStore.activeWindow.windowId === this.windowId;
     },
-    activeWindowContent() {
+    activeWindowContentName() {
       return this.window.windowContentNode.name;
     },
   },
   methods: {
     async handleClick() {
-      await this.uiStore.setActiveWindow(this.window);
-      this.$router.push({ name: this.activeWindowContent });
+      await this.uiStore.setActiveWindow(this.window, this.activeWindowContentName);
     },
-    /*handleClose() {
-      this.uiStore.removeActiveWindow(this.window);
-      if (this.uiStore.activeWindows.length === 0) {
-        this.$router.push({ name: 'desktop'});
-        return;
-      }
-      this.$router.go(-1);
-    },
-    handleMinimize() {
-      this.isMinimizing = !this.isMinimizing;
-      this.uiStore.minimizeWindow(this.window);
-      this.handleClose();
-      // setTimeout(() => {
-      //   this.uiStore.minimizeWindow(this.window);
-      //   this.handleClose();
-      //   this.isMinimizing = false;
-      // }, 1000);
-    },*/
   },
 };
 </script>

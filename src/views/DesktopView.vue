@@ -41,18 +41,13 @@
       </v-navigation-drawer>
 
 
-      {{ $route.name }}
-
-
       <div
         v-for="(window, index) in uiStore.activeWindows"
         :key="window.windowId"
       >
-        <!--          v-if="window.windowContentNode.type === 'folder'"-->
         <ExplorerWindow
           :window-id="window.windowId"
           :window="window"
-          :content="window"
           :initial-x="index * 50"
           :initial-y="index * 50"
         />

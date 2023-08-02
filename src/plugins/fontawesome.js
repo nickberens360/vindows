@@ -25,6 +25,8 @@ import {
   faRectangleBarcode as duoToneUPC,
   faMicrochip as duoToneMicrochip,
   faHashtag as duoToneHash,
+  faFile as duoToneFile,
+  faFolderClosed as duoToneFolderClosed,
 } from '@fortawesome/pro-duotone-svg-icons';
 // Light Icons
 import {
@@ -239,6 +241,8 @@ export default function install(app) {
     duoToneMessageText,
     duoToneEnvelopeOpenText,
     duoToneReceipt,
+    duoToneFile,
+    duoToneFolderClosed,
     faEdit,
     faEllipsisH,
     faEllipsisV,
