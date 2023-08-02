@@ -14,7 +14,7 @@
         <img
           src="https://i.imgur.com/ErWuQ2t.gif"
           alt="Projects"
-          style="width: 80px; top: 15px; position: relative; border-radius: 50%;"
+          style="width: 100px; position: relative; border-radius: 50%;"
           class="elevation-4"
           @click="uiStore.addToActiveWindows('projects')"
         >
@@ -106,7 +106,7 @@ export default {
 //.app-footer__minimized {
 //  .app-footer__item {
 //    &:first-of-type {
-//      border-left: 1px solid red;
+//      border-left: 2px solid white;
 //    }
 //  }
 //}
@@ -115,8 +115,9 @@ export default {
 .app-footer__item {
   position: relative;
   top: -38px;
-  width: 150px;
+  //width: 150px;
   height: 110px;
+  //border: 1px solid black;
   z-index: 1;
   &:after {
     content: "";

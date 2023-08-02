@@ -59,6 +59,7 @@ function generateRoutesFromFileSystem(fileSystemData, currentPath = '') {
   for (const item of fileSystemData.children) {
 
     const itemPath = currentPath === '' ? `/${item.name}` : `${currentPath}/${item.name}`;
+    // TODO: Such mess. Need to refactor
     let component = null;
     if (item.type === 'folder' && item.depth === 1) {
       component = () => import('@/views/DesktopView');
