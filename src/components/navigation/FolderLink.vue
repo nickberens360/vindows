@@ -44,7 +44,7 @@ export default {
 .folder-icon {
   position: relative;
   width: 80px;
-  height: 75px;
+  height: 70px;
   margin: auto;
 }
 

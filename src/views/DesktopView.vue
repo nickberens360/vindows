@@ -57,7 +57,7 @@ import { useUiStore } from '@/store/ui';
 import FolderLink from '@/components/navigation/FolderLink.vue';
 import DesktopLayout from '@/components/layouts/DesktopLayout.vue';
 import ExplorerWindow from '@/components/windows/ExplorerWindow.vue';
-/* eslint-disable */
+
 export default {
   name: 'DesktopView',
   components: {  FolderLink, ExplorerWindow, DesktopLayout },

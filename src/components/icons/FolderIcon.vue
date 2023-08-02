@@ -54,7 +54,7 @@ export default {
 :root {
   --folder-border-radius: 4px;
   --folder-width: 45px;
-  --folder-height: 40px;
+  --folder-height: 38px;
   --folder-border-width: 1px;
   --folder-tab-width: 18px;
   --folder-tab-height: 3px;
