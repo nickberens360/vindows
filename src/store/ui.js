@@ -61,5 +61,5 @@ export const useUiStore = defineStore('ui', {
       this.addToActiveWindows(window.windowContentNode.name);
     }
   },
-  // persist: true,
+  persist: true,
 });
