@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="folder-icon">
+    <div class="folder-icon mb-2">
       <div class="folder-icon__back" />
-      <div class="folder-icon__front text-black text-caption font-weight-semibold text-center">
+      <div class="folder-icon__front text-black text-caption font-weight-semibold text-center line-height-1">
         <p
           v-if="!showLabelBelow"
           class="text-caption text-center font-weight-medium"
@@ -14,7 +14,7 @@
     </div>
     <p
       v-if="showLabelBelow"
-      class="text-caption text-center font-weight-medium text-black"
+      class="text-caption text-center font-weight-medium text-black line-height-1"
     >
       {{ label }}
     </p>

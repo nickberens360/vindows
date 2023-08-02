@@ -26,7 +26,7 @@
           fad fa-file
         </v-icon>
         <p
-          class="text-caption text-center font-weight-medium text-black"
+          class="text-caption text-center font-weight-medium text-black line-height-1"
         >
           {{ item.name }}
         </p>
@@ -81,17 +81,19 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: end;
+  justify-content: center;
   height: 75px;
+  width: 100px;
   text-decoration: none;
   margin: 0 .5rem;
   .v-icon {
     font-size: 3rem;
   }
-  span {
+  p {
     font-weight: 500;
     font-size: .75rem;
     padding: .15rem;
+    line-height: 1 !important;
   }
 }
 
