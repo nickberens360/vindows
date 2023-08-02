@@ -72,7 +72,6 @@ body {
 
 .sun {
   position: absolute;
-  /*z-index: -1;*/
   width: 150px;
   height: 150px;
   border-radius: 50%;
