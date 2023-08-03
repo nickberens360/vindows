@@ -31,12 +31,12 @@
         />
       </router-link>
     </div>
-    <div class="app-footer__minimized d-flex">
+    <div class="app-footer__minimized d-flex flex-column">
       <transition-group name="list">
         <div
           v-for="window in windowManagerStore.minimizedWindows"
           :key="window.windowId"
-          class="app-footer__item"
+          class="app-footer__minimized-item"
           @click="windowManagerStore.removeMinimizedWindow(window)"
         >
           <ExplorerWindow
@@ -113,14 +113,6 @@ export default {
   }
 }
 
-//.app-footer__minimized {
-//  .app-footer__item {
-//    &:first-of-type {
-//      border-left: 2px solid white;
-//    }
-//  }
-//}
-
 
 .app-footer__item {
   position: relative;
@@ -151,7 +143,6 @@ export default {
   }
 
 }
-
 
 .edge {
   position: absolute;
@@ -203,6 +194,33 @@ export default {
     border-radius: 5px 0 0 0;
   }
 }
+
+
+$max: 100;
+
+@for $i from 1 through ceil($max) {
+  $value: ($i - 1) + 1;
+  $unit    : '%';
+  .app-footer__item {
+    width: $i#{$unit};
+    float: left;
+  }
+}
+
+.app-footer__minimized {
+  position: relative;
+  .app-footer__minimized-item {
+    position: relative;
+    margin-top: -90px;
+    transition: margin-top 0.3s ease-in-out;
+  }
+  &:hover {
+    .app-footer__minimized-item {
+      margin-top: 0;
+    }
+  }
+}
+
 
 :deep(.file-window) {
   width: 150px !important;

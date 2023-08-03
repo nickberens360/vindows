@@ -99,7 +99,8 @@ export default {
   },
   methods: {
     async handleClick() {
-      await this.windowManagerStore.setActiveWindow(this.window, this.activeWindowContentName);
+      // await this.windowManagerStore.addToActiveWindows(this.activeWindowContentName, false);
+      this.$router.push({ name: this.activeWindowContentName });
     },
   },
 };

@@ -17,13 +17,14 @@ export const useWindowManagerStore = defineStore('windowManager', {
     findNodeByName(name) {
       return findSystemNodeByName(name, this.systemDataNodes.root);
     },
-    addToActiveWindows(systemDataNodeName) {
-      const node = this.findNodeByName(systemDataNodeName);
+    addToActiveWindows(routeName, openInNewWindow = true) {
+      const node = this.findNodeByName(routeName);
       this.activeWindow = {
         windowId: node.uid,
         windowContentNode: node,
       };
       this.setActiveWindow(this.activeWindow, this.activeWindow.windowContentNode.name);
+      if (!openInNewWindow) return;
       if (this.activeWindows.find(window => window.windowId === node.uid)) return;
       this.activeWindows.push({
         windowId: node.uid,
@@ -54,6 +55,7 @@ export const useWindowManagerStore = defineStore('windowManager', {
     minimizeWindow(window) {
       if (this.minimizedWindows.includes(window)) return;
       this.minimizedWindows.push(window);
+      this.minimizedWindows.reverse();
     },
     removeMinimizedWindow(window) {
       let index = this.minimizedWindows.indexOf(window);
