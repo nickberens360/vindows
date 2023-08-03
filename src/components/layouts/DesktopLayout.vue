@@ -43,6 +43,7 @@ body {
   background: linear-gradient(-125deg, rgba(219,234,254,1) 0%, rgb(138, 176, 237) 45%);
 }
 
+// Foreground
 .hills:after {
   content: "";
   position: absolute;
@@ -56,7 +57,7 @@ body {
   border-radius: 85% 50% 0 0;
 
 }
-
+// Background
 .hills:before {
   content: "";
   position: absolute;

@@ -59,14 +59,8 @@ export default {
       this.$router.go(-1);
     },
     handleMinimize() {
-      this.isMinimizing = !this.isMinimizing;
       this.uiStore.minimizeWindow(this.window);
       this.handleClose();
-      // setTimeout(() => {
-      //   this.uiStore.minimizeWindow(this.window);
-      //   this.handleClose();
-      //   this.isMinimizing = false;
-      // }, 1000);
     },
   },
 };

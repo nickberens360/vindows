@@ -42,29 +42,6 @@
             :content="window.windowContentNode"
             :window-id="windowId"
           />
-
-
-          <!--          <div
-            v-for="item in content.windowContentNode.children"
-            :key="item.uid"
-          >
-                        <router-link
-              v-if="item.type === 'folder'"
-              class="d-block"
-              :to="{ name: item.name}"
-              @click="uiStore.updateWindowContentByNodeName(windowId, item.name)"
-            >
-              {{ item.name }} - {{ item.type }}
-            </router-link>
-            <router-link
-              v-if="item.type === 'file'"
-              class="d-block"
-              :to="{ name: item.name}"
-              @click.stop="uiStore.addToActiveWindows(item.name)"
-            >
-              {{ item.name }} - {{ item.type }}
-            </router-link>
-          </div>-->
         </slot>
       </div>
     </div>

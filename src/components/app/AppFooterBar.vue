@@ -7,7 +7,7 @@
     <div
       class="app-footer__container d-flex align-center justify-center justify-space-between"
     >
-      <router-link
+      <!--      <router-link
         :to="{name: 'about'}"
         class="app-footer__item d-flex align-center justify-center"
       >
@@ -18,20 +18,33 @@
           class="elevation-4"
           @click="uiStore.addToActiveWindows('projects')"
         >
+      </router-link>-->
+      <router-link
+        :to="{name: 'projects'}"
+        class="app-footer__item"
+        @click="uiStore.addToActiveWindows('projects')"
+      >
+        <FolderIcon
+          size="lg"
+          has-active-animation
+          label="Projects"
+        />
       </router-link>
     </div>
     <div class="app-footer__minimized d-flex">
-      <div
-        v-for="window in uiStore.minimizedWindows"
-        :key="window.id"
-        class="app-footer__item"
-        @click="uiStore.removeMinimizedWindow(window)"
-      >
-        <ExplorerWindow
-          :window-id="window.windowId"
-          :window="window"
-        />
-      </div>
+      <transition-group name="list">
+        <div
+          v-for="window in uiStore.minimizedWindows"
+          :key="window.windowId"
+          class="app-footer__item"
+          @click="uiStore.removeMinimizedWindow(window)"
+        >
+          <ExplorerWindow
+            :window-id="window.windowId"
+            :window="window"
+          />
+        </div>
+      </transition-group>
     </div>
     <div class="edge">
         &nbsp;
@@ -43,6 +56,8 @@
 </template>
 
 <script>
+import FolderIcon from '@/components/icons/FolderIcon.vue';
+
 /* eslint-disable */
 import FolderLink from '@/components/navigation/FolderLink.vue';
 import ExplorerWindow from '@/components/windows/ExplorerWindow.vue';
@@ -50,14 +65,9 @@ import { mapStores } from 'pinia';
 import { useUiStore } from '@/store/ui';
 export default {
   name: 'AppFooterBar',
-  components: { FolderLink, ExplorerWindow },
+  components: { FolderIcon, FolderLink, ExplorerWindow },
   computed: {
     ...mapStores(useUiStore),
-  },
-  methods: {
-    handleMinimizedWindowClick(window) {
-      this.uiStore.addActiveWindow(window);
-    },
   },
 };
 </script>

@@ -1,12 +1,14 @@
 <template>
   <div>
-    <div class="folder-icon mb-2">
+    <div
+      class="folder-icon mb-2"
+      :class="{ 'folder-icon--active': hasActiveAnimation }"
+    >
       <div class="folder-icon__back" />
       <div class="folder-icon__front text-black text-caption font-weight-semibold text-center line-height-1">
         <p
           v-if="!showLabelBelow"
-          class="text-caption text-center font-weight-medium"
-          text-black
+          class="text-caption text-center font-weight-medium text-black"
         >
           {{ label }}
         </p>
@@ -43,31 +45,68 @@ export default {
       type: Boolean,
       default: false,
     },
+    hasActiveAnimation: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     ...mapStores(useUiStore),
+    folderSize() {
+      switch (this.size) {
+      case 'sm':
+        return {
+          width: '45px',
+          height: '38px',
+          borderWidth: '1px',
+          borderRadiusOffset: '-1px',
+          borderRadius: '4px',
+          tabWidth: '18px',
+          tabHeight: '3px',
+          tabHeightOffset: '-3px',
+          folderFrontHeight: '35px',
+          folderFrontSkew: 'skewX(-10deg)',
+        };
+      case 'lg':
+        return {
+          width: '80px',
+          height: '75px',
+          borderWidth: '2px',
+          borderRadiusOffset: '-2px',
+          borderRadius: '10px',
+          tabWidth: '34px',
+          tabHeight: '5px',
+          tabHeightOffset: '-5px',
+          folderFrontHeight: '65px',
+          folderFrontSkew: 'skewX(-5deg)',
+          activeHeight: '62px',
+          activeSkew: 'skewX(-15deg)',
+        };
+      default:
+        return {
+          width: '45px',
+          height: '38px',
+          borderWidth: '1px',
+          borderRadiusOffset: '-1px',
+          borderRadius: '4px',
+          tabWidth: '18px',
+          tabHeight: '3px',
+          tabHeightOffset: '-3px',
+          folderFrontHeight: '35px',
+          folderFrontSkew: 'skewX(-10deg)',
+        };
+      }
+    },
   },
 };
 </script>
-
-<style>
-:root {
-  --folder-border-radius: 4px;
-  --folder-width: 45px;
-  --folder-height: 38px;
-  --folder-border-width: 1px;
-  --folder-tab-width: 18px;
-  --folder-tab-height: 3px;
-  --folder-tab-height-offset: calc(-1 * var(--folder-tab-height));
-}
-</style>
 
 <style scoped lang="scss">
 
 .folder-icon {
   position: relative;
-  width: var(--folder-width);
-  height: var(--folder-height);
+  width: v-bind('folderSize.width');
+  height: v-bind('folderSize.height');
   margin: auto;
 }
 
@@ -75,20 +114,20 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 0 var(--folder-border-radius) var(--folder-border-radius) var(--folder-border-radius);
-  border: var(--folder-border-width) solid black;
+  border-radius: 0 v-bind('folderSize.borderRadius') v-bind('folderSize.borderRadius') v-bind('folderSize.borderRadius');
+  border: v-bind('folderSize.borderWidth') solid black;
   background: #fae2b6;
 }
 
 .folder-icon__back:after {
   content: '';
   position: absolute;
-  border-radius: var(--folder-border-radius) var(--folder-border-radius) 0 0;
-  top: var(--folder-tab-height-offset);
-  left: -1px;
-  width: var(--folder-tab-width);
-  height: var(--folder-tab-height);
-  border: var(--folder-border-width) solid black;
+  border-radius: v-bind('folderSize.borderRadius') v-bind('folderSize.borderRadius') 0 0;
+  top: v-bind('folderSize.tabHeightOffset');
+  left: v-bind('folderSize.borderRadiusOffset');
+  width: v-bind('folderSize.tabWidth');
+  height: v-bind('folderSize.tabHeight');
+  border: v-bind('folderSize.borderWidth') solid black;
   border-bottom: none;
   background: #f6d898;
 }
@@ -97,24 +136,17 @@ export default {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 35px;
-  border: var(--folder-border-width) solid black;
+  height: v-bind('folderSize.folderFrontHeight');
+  border: v-bind('folderSize.borderWidth') solid black;
   background: #ffd57c;
-  transform: skewX(-10deg);
+  transform: v-bind('folderSize.folderFrontSkew');
   transform-origin: bottom;
-  border-radius: 4px;
+  border-radius: v-bind('folderSize.borderRadius');
   transition: all 0.25s ease;
 }
 
-//.router-link-active .folder-icon__front {
-//  position: absolute;
-//  bottom: 0;
-//  left: 0;
-//  width: 100%;
-//  height: 70px;
-//  border: 1px solid black;
-//  transform: skewX(15deg);
-//  transform-origin: bottom;
-//  border-radius: 10px;
-//}
+.router-link-active .folder-icon--active .folder-icon__front {
+  height: v-bind('folderSize.activeHeight');
+  transform: v-bind('folderSize.activeSkew');
+}
 </style>

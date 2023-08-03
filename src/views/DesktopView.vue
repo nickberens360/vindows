@@ -14,37 +14,30 @@
         style="z-index: 10;"
         color="transparent"
       >
-        <FolderLink
-          route-name="projects"
-          title="Projects"
-          @click="uiStore.addToActiveWindows('projects')"
-        />
-
-        <FolderLink
-          route-name="about"
-          title="About"
+        <router-link
+          :to="{name: 'about'}"
+          class="mt-8 d-block"
           @click="uiStore.addToActiveWindows('about')"
-        />
-
-        <FolderLink
-          route-name="documents"
-          title="Documents"
-          @click="uiStore.addToActiveWindows('documents')"
-        />
+        >
+          <FolderIcon
+            size="lg"
+            has-active-animation
+            label="About"
+          />
+        </router-link>
       </v-navigation-drawer>
 
 
-      <div
-        v-for="(window, index) in uiStore.activeWindows"
-        :key="window.windowId"
-      >
+      <transition-group name="list">
         <ExplorerWindow
+          v-for="(window, index) in uiStore.activeWindows"
+          :key="window.windowId"
           :window-id="window.windowId"
           :window="window"
           :initial-x="index * 50"
           :initial-y="index * 50"
         />
-      </div>
+      </transition-group>
     </div>
   </DesktopLayout>
 </template>
@@ -54,18 +47,16 @@
 import { mapStores } from 'pinia';
 import { useUiStore } from '@/store/ui';
 
-import FolderLink from '@/components/navigation/FolderLink.vue';
+import FolderIcon from '@/components/icons/FolderIcon.vue';
 import DesktopLayout from '@/components/layouts/DesktopLayout.vue';
 import ExplorerWindow from '@/components/windows/ExplorerWindow.vue';
 
 export default {
   name: 'DesktopView',
-  components: {  FolderLink, ExplorerWindow, DesktopLayout },
+  components: { FolderIcon, ExplorerWindow, DesktopLayout },
   data() {
     return {
-      setItems: null,
       drawer: true,
-      folderContent: null,
     };
   },
   computed: {
@@ -85,5 +76,27 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.list-move, /* apply transition to moving elements */
+.list-enter-active,
+.list-leave-active {
+  transition: all .5s ease;
+}
+
+:deep(.drag-box-container.list-enter-active),
+:deep(.drag-box-container.list-leave-active){
+  z-index: 1000;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 1;
+  transform: translateY(100vh) scale(0);
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.list-leave-active {
+  position: absolute;
+}
 
 </style>
