@@ -25,7 +25,7 @@
           class="d-block"
           style="cursor: pointer"
           :to="{ name: item.name}"
-          @click="uiStore.updateWindowContentByNodeName(windowId, item.name)"
+          @click="windowManagerStore.updateWindowContentByNodeName(windowId, item.name)"
         >
           {{ item.name }}
         </router-link>
@@ -56,7 +56,7 @@ import WindowToolbar from '@/components/windows/windowParts/WindowToolbar.vue';
 import FilePanel from '@/components/windows/windowParts/FilePanel.vue';
 import SubContentView from '@/views/content/SubContentView.vue';
 import { mapStores } from 'pinia';
-import { useUiStore } from '@/store/ui';
+import { useWindowManagerStore } from '@/store/windowManager';
 
 
 
@@ -86,12 +86,12 @@ export default {
     };
   },
   computed: {
-    ...mapStores(useUiStore),
+    ...mapStores(useWindowManagerStore),
     topLevelFolders() {
-      return this.uiStore.systemDataNodes.root.children.filter((item) => item.type === 'folder');
+      return this.windowManagerStore.systemDataNodes.root.children.filter((item) => item.type === 'folder');
     },
     isActive() {
-      return this.uiStore.activeWindow.windowId === this.windowId;
+      return this.windowManagerStore.activeWindow.windowId === this.windowId;
     },
     activeWindowContentName() {
       return this.window.windowContentNode.name;
@@ -99,7 +99,7 @@ export default {
   },
   methods: {
     async handleClick() {
-      await this.uiStore.setActiveWindow(this.window, this.activeWindowContentName);
+      await this.windowManagerStore.setActiveWindow(this.window, this.activeWindowContentName);
     },
   },
 };

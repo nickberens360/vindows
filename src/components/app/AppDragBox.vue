@@ -25,7 +25,7 @@
 
 <script>
 import { mapStores } from 'pinia';
-import { useUiStore } from '@/store/ui';
+import { useWindowManagerStore } from '@/store/windowManager';
 export default {
   name: 'DragBox',
   props: {
@@ -53,7 +53,7 @@ export default {
     };
   },
   computed: {
-    ...mapStores(useUiStore),
+    ...mapStores(useWindowManagerStore),
     setZIndex() {
       return this.zIndex;
     },

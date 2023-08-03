@@ -10,7 +10,7 @@
 <script>
 import { mapStores } from 'pinia';
 import { useFileManagerStore } from '@/store/fileManager';
-import { useUiStore } from '@/store/ui';
+import { useWindowManagerStore } from '@/store/windowManager';
 
 export default {
   name: 'WindowLink',
@@ -21,7 +21,7 @@ export default {
     },
   },
   methods: {
-    ...mapStores(useFileManagerStore, useUiStore),
+    ...mapStores(useFileManagerStore, useWindowManagerStore),
     getFolderPath(item) {
       return {
         name: 'folder',
@@ -32,7 +32,7 @@ export default {
     },
     handleFolderClick(item) {
       this.fileManagerStore.setCurrentFolder(item);
-      this.uiStore.addActiveWindow(item);
+      this.windowManagerStore.addActiveWindow(item);
     },
   },
 };

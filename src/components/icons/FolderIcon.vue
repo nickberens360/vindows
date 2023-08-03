@@ -25,7 +25,7 @@
 
 <script>
 import { mapStores } from 'pinia';
-import { useUiStore } from '@/store/ui';
+import { useWindowManagerStore } from '@/store/windowManager';
 export default {
   name: 'FolderIcon',
   props: {
@@ -51,7 +51,7 @@ export default {
     },
   },
   computed: {
-    ...mapStores(useUiStore),
+    ...mapStores(useWindowManagerStore),
     folderSize() {
       switch (this.size) {
       case 'sm':

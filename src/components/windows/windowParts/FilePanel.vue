@@ -5,7 +5,7 @@
 </template>
 <script>
 
-import { useUiStore } from '@/store/ui';
+import { useWindowManagerStore } from '@/store/windowManager';
 import { mapStores } from 'pinia';
 
 
@@ -32,7 +32,7 @@ export default {
   },
   emits: ['folder-clicked'],
   computed: {
-    ...mapStores(useUiStore),
+    ...mapStores(useWindowManagerStore),
   },
 };
 </script>

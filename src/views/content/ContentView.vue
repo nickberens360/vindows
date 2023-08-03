@@ -52,7 +52,7 @@
 </template>
 <script>
 
-import { useUiStore } from '@/store/ui';
+import { useWindowManagerStore } from '@/store/windowManager';
 import { mapStores } from 'pinia';
 
 
@@ -79,13 +79,13 @@ export default {
     };
   },
   computed: {
-    ...mapStores(useUiStore),
+    ...mapStores(useWindowManagerStore),
   },
   methods: {
     handleFolderClick(folder) {
       this.$emit('folder-clicked', folder);
-      this.uiStore.addActiveWindow(folder, false);
-      this.uiStore.activeWindowContent = folder;
+      this.windowManagerStore.addActiveWindow(folder, false);
+      this.windowManagerStore.activeWindowContent = folder;
     },
   },
 };

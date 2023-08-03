@@ -17,7 +17,7 @@
         <router-link
           :to="{name: 'about'}"
           class="mt-8 d-block"
-          @click="uiStore.addToActiveWindows('about')"
+          @click="windowManagerStore.addToActiveWindows('about')"
         >
           <FolderIcon
             size="lg"
@@ -30,7 +30,7 @@
 
       <transition-group name="list">
         <ExplorerWindow
-          v-for="(window, index) in uiStore.activeWindows"
+          v-for="(window, index) in windowManagerStore.activeWindows"
           :key="window.windowId"
           :window-id="window.windowId"
           :window="window"
@@ -45,7 +45,7 @@
 <script>
 
 import { mapStores } from 'pinia';
-import { useUiStore } from '@/store/ui';
+import { useWindowManagerStore } from '@/store/windowManager';
 
 import FolderIcon from '@/components/icons/FolderIcon.vue';
 import DesktopLayout from '@/components/layouts/DesktopLayout.vue';
@@ -60,7 +60,7 @@ export default {
     };
   },
   computed: {
-    ...mapStores(useUiStore),
+    ...mapStores(useWindowManagerStore),
   },
   mounted() {
     if (this.$route.name !== 'desktop') {
@@ -69,7 +69,7 @@ export default {
   },
   methods: {
     initStoreData() {
-      this.uiStore.addToActiveWindows(this.$route.name);
+      this.windowManagerStore.addToActiveWindows(this.$route.name);
     },
   },
 

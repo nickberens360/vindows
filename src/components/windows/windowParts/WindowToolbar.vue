@@ -22,7 +22,7 @@
 </template>
 <script>
 
-import { useUiStore } from '@/store/ui';
+import { useWindowManagerStore } from '@/store/windowManager';
 import { mapStores } from 'pinia';
 
 
@@ -44,22 +44,22 @@ export default {
     },
   },
   computed: {
-    ...mapStores(useUiStore),
+    ...mapStores(useWindowManagerStore),
     toolBarColor() {
       return this.windowType === 'folder' ? '#f1ebde' : 'black';
     },
   },
   methods: {
     handleClose() {
-      this.uiStore.removeActiveWindow(this.window);
-      if (this.uiStore.activeWindows.length === 0) {
+      this.windowManagerStore.removeActiveWindow(this.window);
+      if (this.windowManagerStore.activeWindows.length === 0) {
         this.$router.push({ name: 'desktop'});
         return;
       }
       this.$router.go(-1);
     },
     handleMinimize() {
-      this.uiStore.minimizeWindow(this.window);
+      this.windowManagerStore.minimizeWindow(this.window);
       this.handleClose();
     },
   },

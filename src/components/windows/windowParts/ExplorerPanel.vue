@@ -8,7 +8,7 @@
         v-if="item.type === 'folder'"
         class="panel-link"
         :to="{ name: item.name}"
-        @click="uiStore.updateWindowContentByNodeName(windowId, item.name)"
+        @click="windowManagerStore.updateWindowContentByNodeName(windowId, item.name)"
       >
         <FolderIcon
           size="sm"
@@ -20,7 +20,7 @@
         v-if="item.type === 'file'"
         class="panel-link"
         :to="{ name: item.name}"
-        @click="uiStore.addToActiveWindows(item.name)"
+        @click="windowManagerStore.addToActiveWindows(item.name)"
       >
         <v-icon color="blue">
           fad fa-file
@@ -37,7 +37,7 @@
 <script>
 
 import FolderIcon from '@/components/icons/FolderIcon.vue';
-import { useUiStore } from '@/store/ui';
+import { useWindowManagerStore } from '@/store/windowManager';
 import { mapStores } from 'pinia';
 
 
@@ -65,7 +65,7 @@ export default {
   },
   emits: ['folder-clicked'],
   computed: {
-    ...mapStores(useUiStore),
+    ...mapStores(useWindowManagerStore),
   },
 };
 </script>

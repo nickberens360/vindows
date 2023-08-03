@@ -3,7 +3,7 @@ import { findSystemNodeByName } from '@/utilities/systemUtils';
 import { defineStore } from 'pinia';
 
 
-export const useUiStore = defineStore('ui', {
+export const useWindowManagerStore = defineStore('windowManager', {
   state: () => {
     return {
       systemDataNodes: JSON.parse(JSON.stringify(fileSystem)),
@@ -61,5 +61,5 @@ export const useUiStore = defineStore('ui', {
       this.addToActiveWindows(window.windowContentNode.name);
     }
   },
-  persist: true,
+  // persist: true,
 });

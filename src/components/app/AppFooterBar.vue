@@ -16,13 +16,13 @@
           alt="Projects"
           style="width: 100px; position: relative; border-radius: 50%;"
           class="elevation-4"
-          @click="uiStore.addToActiveWindows('projects')"
+          @click="windowManagerStore.addToActiveWindows('projects')"
         >
       </router-link>-->
       <router-link
         :to="{name: 'projects'}"
         class="app-footer__item"
-        @click="uiStore.addToActiveWindows('projects')"
+        @click="windowManagerStore.addToActiveWindows('projects')"
       >
         <FolderIcon
           size="lg"
@@ -34,10 +34,10 @@
     <div class="app-footer__minimized d-flex">
       <transition-group name="list">
         <div
-          v-for="window in uiStore.minimizedWindows"
+          v-for="window in windowManagerStore.minimizedWindows"
           :key="window.windowId"
           class="app-footer__item"
-          @click="uiStore.removeMinimizedWindow(window)"
+          @click="windowManagerStore.removeMinimizedWindow(window)"
         >
           <ExplorerWindow
             :window-id="window.windowId"
@@ -62,12 +62,12 @@ import FolderIcon from '@/components/icons/FolderIcon.vue';
 import FolderLink from '@/components/navigation/FolderLink.vue';
 import ExplorerWindow from '@/components/windows/ExplorerWindow.vue';
 import { mapStores } from 'pinia';
-import { useUiStore } from '@/store/ui';
+import { useWindowManagerStore } from '@/store/windowManager';
 export default {
   name: 'AppFooterBar',
   components: { FolderIcon, FolderLink, ExplorerWindow },
   computed: {
-    ...mapStores(useUiStore),
+    ...mapStores(useWindowManagerStore),
   },
 };
 </script>
