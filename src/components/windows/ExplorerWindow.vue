@@ -2,7 +2,7 @@
   <AppDragBox
     :id="windowId"
     class="file-window"
-    :class="{active: isActive, minimizing: isMinimizing}"
+    :class="{active: isActive}"
     @click.capture="handleClick"
     @drag-box-mousedown="handleClick"
   >
@@ -77,10 +77,13 @@ export default {
       type: String,
       default: 'Explorer',
     },
+    isMinimizedWindow: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
-      isMinimizing: false,
       tab: this.id,
       activeContentNode: {},
     };
@@ -98,8 +101,8 @@ export default {
     },
   },
   methods: {
-    async handleClick() {
-      // await this.windowManagerStore.addToActiveWindows(this.activeWindowContentName, false);
+    handleClick() {
+      console.log('handleClick');
       this.$router.push({ name: this.activeWindowContentName });
     },
   },

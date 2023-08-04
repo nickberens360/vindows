@@ -31,20 +31,24 @@
         />
       </router-link>
     </div>
-    <div class="app-footer__minimized d-flex flex-column">
-      <transition-group name="list">
+    <div
+      v-if="minimizedWindows.length"
+      class="app-footer__item"
+    >
+      <div class="app-footer__minimized d-flex flex-column">
         <div
-          v-for="window in windowManagerStore.minimizedWindows"
-          :key="window.windowId"
+          v-for="(window, index) in minimizedWindows"
+          :key="window.windowId + index"
           class="app-footer__minimized-item"
           @click="windowManagerStore.removeMinimizedWindow(window)"
         >
           <ExplorerWindow
             :window-id="window.windowId"
             :window="window"
+            is-minimized-window
           />
         </div>
-      </transition-group>
+      </div>
     </div>
     <div class="edge">
         &nbsp;
@@ -68,6 +72,9 @@ export default {
   components: { FolderIcon, FolderLink, ExplorerWindow },
   computed: {
     ...mapStores(useWindowManagerStore),
+    minimizedWindows() {
+      return this.windowManagerStore.minimizedWindows
+    },
   },
 };
 </script>
@@ -77,16 +84,17 @@ export default {
 .v-footer {
   transform: translateX(-50%) !important;
   width: 1000px !important;
-  bottom: 0 !important;
+  bottom: 75px !important;
+  //bottom: 0 !important;
   left: 50% !important;
   right: 50% !important;
   background: rgb(238,238,238);
   background: linear-gradient(313deg, rgba(238,238,238,1) 23%, rgba(210,210,210,1) 99%);
   transition: bottom 0.3s ease-in-out;
 
-  &:hover {
-    bottom: 75px !important;
-  }
+  //&:hover {
+  //  bottom: 75px !important;
+  //}
   &:before {
     content: "";
     position: absolute;
@@ -118,7 +126,7 @@ export default {
   position: relative;
   top: -38px;
   //width: 150px;
-  height: 110px;
+  //height: 110px;
   //border: 1px solid black;
   z-index: 1;
   &:after {
@@ -126,7 +134,7 @@ export default {
     position: absolute;
     z-index: -1;
     bottom: -20px;
-    width: 15%;
+    width: 20px;
     height: 4px;
     left: 50%;
     right: 50%;
@@ -138,10 +146,9 @@ export default {
   }
   &.router-link-active {
     &:after {
-      background: red;
+      background: #005aff;
     }
   }
-
 }
 
 .edge {
@@ -196,31 +203,49 @@ export default {
 }
 
 
-$max: 100;
 
-@for $i from 1 through ceil($max) {
-  $value: ($i - 1) + 1;
-  $unit    : '%';
-  .app-footer__item {
-    width: $i#{$unit};
-    float: left;
+.app-footer__item {
+  &:hover {
+    .app-footer__minimized {
+      background: rgba(0, 0, 0, 0.3);
+      max-height: 500px;
+      overflow: auto;
+      .app-footer__minimized-item {
+        margin-top: 0;
+      }
+    }
   }
 }
 
 .app-footer__minimized {
   position: relative;
+  border-radius: 8px;
+  padding: 6px 0;
+  background: transparent;
+  transition: background 0.3s ease-in-out;
   .app-footer__minimized-item {
     position: relative;
     margin-top: -90px;
-    transition: margin-top 0.3s ease-in-out;
+    transition: margin-top 0.3s ease-out;
   }
-  &:hover {
-    .app-footer__minimized-item {
-      margin-top: 0;
-    }
-  }
+  //&:hover {
+  //  background: rgba(0, 0, 0, 0.3);
+  //  max-height: 500px;
+  //  overflow: auto;
+  //  bottom: 200px;
+  //  .app-footer__minimized-item {
+  //    margin-top: 0;
+  //  }
+  //}
 }
 
+//.app-footer__minimized-item {
+//  opacity: 0;
+//  transition: opacity 0.5s ease-in-out;
+//  &.is-loaded {
+//    opacity: 1;
+//  }
+//}
 
 :deep(.file-window) {
   width: 150px !important;
@@ -248,4 +273,6 @@ $max: 100;
     pointer-events: none !important;
   }
 }
+
+
 </style>

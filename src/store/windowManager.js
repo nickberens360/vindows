@@ -11,6 +11,7 @@ export const useWindowManagerStore = defineStore('windowManager', {
       activeWindowContent: {},
       activeWindows: [],
       minimizedWindows: [],
+      isMinimizedComplete: false,
     };
   },
   actions: {
@@ -18,6 +19,7 @@ export const useWindowManagerStore = defineStore('windowManager', {
       return findSystemNodeByName(name, this.systemDataNodes.root);
     },
     addToActiveWindows(routeName, openInNewWindow = true) {
+      console.log('adding to active windows', routeName, openInNewWindow);
       const node = this.findNodeByName(routeName);
       this.activeWindow = {
         windowId: node.uid,
@@ -33,11 +35,13 @@ export const useWindowManagerStore = defineStore('windowManager', {
     },
 
     updateWindowContentByNodeName(windowId, name) {
+      console.log('updating window content by node name', windowId, name);
       const window = this.activeWindows.find(window => window.windowId === windowId);
       window.windowContentNode = this.findNodeByName(name);
     },
 
     setActiveWindow(window, routeName) {
+      console.log('setting active window', window);
       this.activeWindow = window;
       this.$router.push({ name: routeName});
       const index = this.activeWindows.findIndex((item) => item.windowId === window.windowId);
@@ -49,18 +53,22 @@ export const useWindowManagerStore = defineStore('windowManager', {
 
 
     removeActiveWindow(window) {
+      console.log('removing active window', window);
       let index = this.activeWindows.indexOf(window);
       this.activeWindows.splice(index, 1);
     },
     minimizeWindow(window) {
+      console.log('minimizing window', window);
       if (this.minimizedWindows.includes(window)) return;
       this.minimizedWindows.push(window);
-      this.minimizedWindows.reverse();
+      // this.minimizedWindows.reverse();
     },
     removeMinimizedWindow(window) {
-      let index = this.minimizedWindows.indexOf(window);
+      console.log('removing minimized window', window);
+      const index = this.minimizedWindows.findIndex((item) => item.windowId === window.windowId);
       this.minimizedWindows.splice(index, 1);
       this.addToActiveWindows(window.windowContentNode.name);
+
     }
   },
   // persist: true,

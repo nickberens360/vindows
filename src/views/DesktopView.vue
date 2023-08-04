@@ -63,9 +63,7 @@ export default {
     ...mapStores(useWindowManagerStore),
   },
   watch: {
-    '$route'(to, from) {
-      console.log('to', to);
-      console.log('from', from);
+    '$route'() {
       if (this.$route.name !== 'desktop') {
         this.windowManagerStore.addToActiveWindows(this.$route.name, false);
       }

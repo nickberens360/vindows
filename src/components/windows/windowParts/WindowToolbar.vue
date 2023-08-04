@@ -8,7 +8,7 @@
     <template #append>
       <v-icon
         icon="fal fa-minus-square"
-        @click="handleMinimize"
+        @click.stop="handleMinimize"
       />
       <v-icon
         icon="far fa-times"
@@ -43,6 +43,8 @@ export default {
       default: 'window-1',
     },
   },
+  emits: ['minimize-complete'],
+
   computed: {
     ...mapStores(useWindowManagerStore),
     toolBarColor() {
@@ -61,6 +63,9 @@ export default {
     handleMinimize() {
       this.windowManagerStore.minimizeWindow(this.window);
       this.handleClose();
+      setTimeout(() => {
+        this.$emit('minimize-complete');
+      }, 1000);
     },
   },
 };
