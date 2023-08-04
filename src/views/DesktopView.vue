@@ -25,6 +25,28 @@
             label="About"
           />
         </router-link>
+        <router-link
+          :to="{name: 'projects'}"
+          class="mt-8 d-block"
+          @click="windowManagerStore.addToActiveWindows('projects')"
+        >
+          <FolderIcon
+            size="lg"
+            has-active-animation
+            label="Projects"
+          />
+        </router-link>
+        <router-link
+          :to="{name: 'documents'}"
+          class="mt-8 d-block"
+          @click="windowManagerStore.addToActiveWindows('documents')"
+        >
+          <FolderIcon
+            size="lg"
+            has-active-animation
+            label="Documents"
+          />
+        </router-link>
       </v-navigation-drawer>
 
 

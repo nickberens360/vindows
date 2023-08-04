@@ -7,7 +7,7 @@
     <div
       class="app-footer__container d-flex align-center justify-center justify-space-between"
     >
-      <!--      <router-link
+      <router-link
         :to="{name: 'about'}"
         class="app-footer__item d-flex align-center justify-center"
       >
@@ -18,8 +18,8 @@
           class="elevation-4"
           @click="windowManagerStore.addToActiveWindows('projects')"
         >
-      </router-link>-->
-      <router-link
+      </router-link>
+      <!--      <router-link
         :to="{name: 'projects'}"
         class="app-footer__item"
         @click="windowManagerStore.addToActiveWindows('projects')"
@@ -29,7 +29,7 @@
           has-active-animation
           label="Projects"
         />
-      </router-link>
+      </router-link>-->
     </div>
     <v-slide-x-reverse-transition>
       <div
