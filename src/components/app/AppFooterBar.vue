@@ -37,20 +37,18 @@
         class="app-footer__item"
       >
         <div class="app-footer__minimized d-flex flex-column">
-          <v-slide-x-reverse-transition group>
-            <div
-              v-for="(window, index) in windowManagerStore.minimizedWindows"
-              :key="window.windowId + index"
-              class="app-footer__minimized-item"
-              @click="windowManagerStore.removeMinimizedWindow(window)"
-            >
-              <ExplorerWindow
-                :window-id="window.windowId"
-                :window="window"
-                is-minimized-window
-              />
-            </div>
-          </v-slide-x-reverse-transition>
+          <div
+            v-for="(window, index) in windowManagerStore.minimizedWindows"
+            :key="window.windowId + index"
+            class="app-footer__minimized-item"
+            @click="windowManagerStore.removeMinimizedWindow(window)"
+          >
+            <ExplorerWindow
+              :window-id="window.windowId"
+              :window="window"
+              is-minimized-window
+            />
+          </div>
         </div>
       </div>
     </v-slide-x-reverse-transition>
@@ -96,9 +94,12 @@ export default {
   background: linear-gradient(313deg, rgba(238,238,238,1) 23%, rgba(210,210,210,1) 99%);
   transition: bottom 0.3s ease-in-out;
 
-  //&:hover {
-  //  bottom: 75px !important;
-  //}
+  &:hover {
+    bottom: 85px !important;
+    .app-footer__shadow {
+      bottom: -75px !important;
+    }
+  }
   &:before {
     content: "";
     position: absolute;
@@ -180,6 +181,7 @@ export default {
   background: black;
   //filter: blur(5px);
   opacity: 0.30;
+  transition: bottom 0.3s ease-in-out;
   &:before {
     content: "";
     position: absolute;
