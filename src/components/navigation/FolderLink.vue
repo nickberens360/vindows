@@ -68,7 +68,6 @@ export default {
   border: 2px solid black;
   border-bottom: none;
   background: #f6d898;
-  //transform: skew(-27deg);
 }
 
 .folder-icon__front {

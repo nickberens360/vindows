@@ -189,7 +189,6 @@ export default {
   left: 50% !important;
   right: 50% !important;
   background: black;
-  //filter: blur(5px);
   opacity: 0.30;
   transition: bottom 0.3s ease-in-out;
   &:before {
@@ -231,7 +230,7 @@ export default {
       background: rgba(0, 0, 0, 0.3);
       max-width: 400px;
       overflow: auto;
-      bottom: 0;
+      bottom: 20px;
       justify-content: start;
       .app-footer__minimized-item {
         margin: 6px 12px;
