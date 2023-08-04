@@ -31,25 +31,29 @@
         />
       </router-link>
     </div>
-    <div
-      v-if="minimizedWindows.length"
-      class="app-footer__item"
-    >
-      <div class="app-footer__minimized d-flex flex-column">
-        <div
-          v-for="(window, index) in minimizedWindows"
-          :key="window.windowId + index"
-          class="app-footer__minimized-item"
-          @click="windowManagerStore.removeMinimizedWindow(window)"
-        >
-          <ExplorerWindow
-            :window-id="window.windowId"
-            :window="window"
-            is-minimized-window
-          />
+    <v-slide-x-reverse-transition>
+      <div
+        v-if="windowManagerStore.minimizedWindows.length"
+        class="app-footer__item"
+      >
+        <div class="app-footer__minimized d-flex flex-column">
+          <v-slide-x-reverse-transition group>
+            <div
+              v-for="(window, index) in windowManagerStore.minimizedWindows"
+              :key="window.windowId + index"
+              class="app-footer__minimized-item"
+              @click="windowManagerStore.removeMinimizedWindow(window)"
+            >
+              <ExplorerWindow
+                :window-id="window.windowId"
+                :window="window"
+                is-minimized-window
+              />
+            </div>
+          </v-slide-x-reverse-transition>
         </div>
       </div>
-    </div>
+    </v-slide-x-reverse-transition>
     <div class="edge">
         &nbsp;
     </div>
