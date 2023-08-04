@@ -86,7 +86,7 @@ export default {
 .list-move, /* apply transition to moving elements */
 .list-enter-active,
 .list-leave-active {
-  transition: all .5s ease;
+  transition: all .25s ease;
 }
 
 :deep(.drag-box-container.list-enter-active),
@@ -96,8 +96,8 @@ export default {
 
 .list-enter-from,
 .list-leave-to {
-  opacity: 1;
-  transform: translateY(100vh) scale(0);
+  opacity: .25;
+  transform: translateY(300px) scale(.5);
 }
 
 /* ensure leaving items are taken out of layout flow so that moving

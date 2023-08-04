@@ -71,5 +71,5 @@ export const useWindowManagerStore = defineStore('windowManager', {
 
     }
   },
-  // persist: true,
+  persist: true,
 });

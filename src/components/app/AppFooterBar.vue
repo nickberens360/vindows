@@ -34,20 +34,24 @@
     <v-slide-x-reverse-transition>
       <div
         v-if="windowManagerStore.minimizedWindows.length"
-        class="app-footer__item"
+        class="app-footer__item app-footer__item--minimized"
       >
-        <div class="app-footer__minimized d-flex flex-column">
+        <div class="app-footer__minimized d-flex flex-row-reverse">
           <div
             v-for="(window, index) in windowManagerStore.minimizedWindows"
             :key="window.windowId + index"
             class="app-footer__minimized-item"
             @click="windowManagerStore.removeMinimizedWindow(window)"
           >
-            <ExplorerWindow
+            <MinWindow
+              :window="window"
+              style="box-shadow: 7px 0 5px -3px rgba(0,0,0,0.37);"
+            />
+            <!--            <ExplorerWindow
               :window-id="window.windowId"
               :window="window"
               is-minimized-window
-            />
+            />-->
           </div>
         </div>
       </div>
@@ -66,12 +70,18 @@ import FolderIcon from '@/components/icons/FolderIcon.vue';
 
 /* eslint-disable */
 import FolderLink from '@/components/navigation/FolderLink.vue';
-import ExplorerWindow from '@/components/windows/ExplorerWindow.vue';
+import MinWindow from '@/components/windows/MinWindow.vue';
+// import ExplorerWindow from '@/components/windows/ExplorerWindow.vue';
 import { mapStores } from 'pinia';
 import { useWindowManagerStore } from '@/store/windowManager';
 export default {
   name: 'AppFooterBar',
-  components: { FolderIcon, FolderLink, ExplorerWindow },
+  components: {
+    MinWindow,
+    FolderIcon,
+    FolderLink,
+    // ExplorerWindow
+  },
   computed: {
     ...mapStores(useWindowManagerStore),
     minimizedWindows() {
@@ -94,12 +104,12 @@ export default {
   background: linear-gradient(313deg, rgba(238,238,238,1) 23%, rgba(210,210,210,1) 99%);
   transition: bottom 0.3s ease-in-out;
 
-  &:hover {
-    bottom: 85px !important;
-    .app-footer__shadow {
-      bottom: -75px !important;
-    }
-  }
+  //&:hover {
+  //  bottom: 85px !important;
+  //  .app-footer__shadow {
+  //    bottom: -75px !important;
+  //  }
+  //}
   &:before {
     content: "";
     position: absolute;
@@ -210,14 +220,21 @@ export default {
 
 
 
-.app-footer__item {
+.app-footer__item.app-footer__item--minimized {
+  padding: 0 48px;
+  right: -100px;
   &:hover {
+    &:after {
+      display: none;
+    }
     .app-footer__minimized {
       background: rgba(0, 0, 0, 0.3);
-      max-height: 500px;
+      max-width: 400px;
       overflow: auto;
+      bottom: 0;
+      justify-content: start;
       .app-footer__minimized-item {
-        margin-top: 0;
+        margin: 6px 12px;
       }
     }
   }
@@ -226,32 +243,16 @@ export default {
 .app-footer__minimized {
   position: relative;
   border-radius: 8px;
-  padding: 6px 0;
+  padding: 12px;
   background: transparent;
-  transition: background 0.3s ease-in-out;
+  flex-wrap: wrap;
+  bottom: -10px;
+  transition: background 0.3s ease-in-out, bottom 0.3s ease-in;
   .app-footer__minimized-item {
     position: relative;
-    margin-top: -90px;
-    transition: margin-top 0.3s ease-out;
+    margin: 0 -34px;
   }
-  //&:hover {
-  //  background: rgba(0, 0, 0, 0.3);
-  //  max-height: 500px;
-  //  overflow: auto;
-  //  bottom: 200px;
-  //  .app-footer__minimized-item {
-  //    margin-top: 0;
-  //  }
-  //}
 }
-
-//.app-footer__minimized-item {
-//  opacity: 0;
-//  transition: opacity 0.5s ease-in-out;
-//  &.is-loaded {
-//    opacity: 1;
-//  }
-//}
 
 :deep(.file-window) {
   width: 150px !important;
